@@ -6,7 +6,7 @@
         <DefaultGeneratedCoverageReportsDir>$(TestRoot)\Reports</DefaultGeneratedCoverageReportsDir>
     </PropertyGroup>
 
-    <Import Project="TestPackages.props" />
-    <Import Project="CodeCoverage.targets" />
+    <Import Project="$(TestRoot)\TestPackages.props" />
+    <Import Project="$(TestRoot)\CodeCoverage.targets" />
     
 </Project>

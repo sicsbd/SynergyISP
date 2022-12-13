@@ -3,6 +3,5 @@
         <CollectCoverage>true</CollectCoverage>
         <CoverletOutput>$(DefaultGeneratedCoverageResultsDir)\</CoverletOutput>
         <CoverletOutputFormat>cobertura,opencover</CoverletOutputFormat>
-    </PropertyGroup>
-    
+    </PropertyGroup>    
 </Project>

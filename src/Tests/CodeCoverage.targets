@@ -1,5 +1,5 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Import Project="CodeCoverage.Coverlet.props" />
+    <Import Project="$(TestRoot)\CodeCoverage.Coverlet.props" />
     
 	<Target Name="GenerateCoverageReports" AfterTargets="GenerateCoverageResultAfterTest">
         <ItemGroup>
