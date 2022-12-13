@@ -26,4 +26,4 @@ stages:
     - script: cd src && dotnet test ./Tests/**/*IntegrationTests/IntegrationTests.csproj -c Debug
   - job: UITest  
     steps:  
-    - script: cd src && dotnet test ./Tests/**/*.UITests/*.UITests.csproj -c Debug --collect:"XPlat Code Coevrage" --logger "trx" /p:CollectCoverage=true /p:CoverletOutput=./Tests/TestReports --% /p:CoverletOutputFormat=\"opencover,cobertura\"
+    - script: cd src && dotnet test ./Tests/**/*.UITests/*.UITests.csproj -c Debug --collect:"XPlat Code Coevrage" --logger "trx" /p:CollectCoverage=true /p:CoverletOutput=./Tests/Results --% /p:CoverletOutputFormat=\"opencover,cobertura\"
