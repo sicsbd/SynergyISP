@@ -14,20 +14,16 @@ stages:
   jobs:  
   - job: Build  
     steps:  
-    - script: cd src
-    - script: dotnet build ./SynergyISP.sln -c Debug  
+    - script: cd src && dotnet build ./SynergyISP.sln -c Debug  
 - stage: Test 
   dependsOn: Build
   jobs:  
   - job: UnitTest  
     steps:  
-    - script: cd src
-    - script: dotnet test ./Tests/**/*UnitTests/UnitTests.csproj -c Debug 
+    - script: cd src && dotnet test ./Tests/**/*UnitTests/UnitTests.csproj -c Debug 
   - job: IntegrationTest  
     steps:  
-    - script: cd src
-    - script: dotnet test ./Tests/**/*IntegrationTests/IntegrationTests.csproj -c Debug
+    - script: cd src && dotnet test ./Tests/**/*IntegrationTests/IntegrationTests.csproj -c Debug
   - job: UITest  
     steps:  
-    - script: cd src
-    - script: dotnet test ./Tests/**/*.UITests/*.UITests.csproj -c Debug --collect:"XPlat Code Coevrage" --logger "trx" /p:CollectCoverage=true /p:CoverletOutput=./Tests/TestReports --% /p:CoverletOutputFormat=\"opencover,cobertura\"
+    - script: cd src && dotnet test ./Tests/**/*.UITests/*.UITests.csproj -c Debug --collect:"XPlat Code Coevrage" --logger "trx" /p:CollectCoverage=true /p:CoverletOutput=./Tests/TestReports --% /p:CoverletOutputFormat=\"opencover,cobertura\"
