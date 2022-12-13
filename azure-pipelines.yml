@@ -15,7 +15,7 @@ stages:
   - job: Build  
     steps:  
     - script: cd src
-    - script: dotnet build -c Debug  
+    - script: dotnet build SynergyISP.sln -c Debug  
 - stage: Test  
   jobs:  
   - job: UnitTest  
