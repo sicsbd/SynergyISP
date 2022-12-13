@@ -4,9 +4,5 @@
         <CoverletOutput>$(DefaultGeneratedCoverageResultsDir)\</CoverletOutput>
         <CoverletOutputFormat>cobertura,opencover</CoverletOutputFormat>
     </PropertyGroup>
-
-    <Import Project="TestPackages.props" />
-    <Import Project="CodeCoverage.Coverlet.props" />
-    <Import Project="CodeCoverage.targets" />
     
 </Project>

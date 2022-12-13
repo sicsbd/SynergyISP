@@ -9,21 +9,24 @@ pr:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  configuration: Release
+
 stages:  
 - stage: Build  
   jobs:  
   - job: Build  
     steps:  
-    - script: cd src && dotnet build ./SynergyISP.sln -c Debug  
+    - script: cd src && dotnet build ./SynergyISP.sln -c Release  
 - stage: Test 
   dependsOn: Build
   jobs:  
   - job: UnitTest  
     steps:  
-    - script: cd src && dotnet test ./Tests/**/*UnitTests/UnitTests.csproj -c Debug  --collect:"XPlat Code Coevrage" --logger "trx" /p:CollectCoverage=true /p:CoverletOutput=./Tests/Results --% /p:CoverletOutputFormat=\"opencover,cobertura\"
+    - script: cd src && dotnet test ./Tests/**/*UnitTests/UnitTests.csproj -c Release  --collect:"XPlat Code Coevrage" --logger "trx" /p:CollectCoverage=true /p:CoverletOutput=./Tests/Results --% /p:CoverletOutputFormat=\"opencover,cobertura\"
   - job: IntegrationTest  
     steps:  
-    - script: cd src && dotnet test ./Tests/**/*IntegrationTests/*IntegrationTests.csproj -c Debug --collect:"XPlat Code Coevrage" --logger "trx" /p:CollectCoverage=true /p:CoverletOutput=./Tests/Results --% /p:CoverletOutputFormat=\"opencover,cobertura\"
+    - script: cd src && dotnet test ./Tests/**/*IntegrationTests/*IntegrationTests.csproj -c Release --collect:"XPlat Code Coevrage" --logger "trx" /p:CollectCoverage=true /p:CoverletOutput=./Tests/Results --% /p:CoverletOutputFormat=\"opencover,cobertura\"
   - job: UITest  
     steps:  
-    - script: cd src && dotnet test ./Tests/**/*.UITests/*.UITests.csproj -c Debug --collect:"XPlat Code Coevrage" --logger "trx" /p:CollectCoverage=true /p:CoverletOutput=./Tests/Results --% /p:CoverletOutputFormat=\"opencover,cobertura\"
+    - script: cd src && dotnet test ./Tests/**/*.UITests/*.UITests.csproj -c Release --collect:"XPlat Code Coevrage" --logger "trx" /p:CollectCoverage=true /p:CoverletOutput=./Tests/Results --% /p:CoverletOutputFormat=\"opencover,cobertura\"
