@@ -1,0 +1,8 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Target Name="GenerateCoverageReports" AfterTargets="GenerateCoverageResultAfterTest">
+        <ItemGroup>
+            <CoverageResultFiles Include="$(DefaultGeneratedCoverageResultsDir)\coverage.opencover.xml" />
+        </ItemGroup>
+        <ReportGenerator ReportFiles="@(CoverageResultFiles)" TargetDirectory="$(DefaultGeneratedCoverageReportsDir)" ReportTypes="HtmlSummary;TextSummary;SonarQube;Badges" VerbosityLevel="Verbose" />
+    </Target>
+</Project>
