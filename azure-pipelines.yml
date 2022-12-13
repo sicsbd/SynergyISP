@@ -12,7 +12,7 @@ pool:
 stages:  
 - stage: Build  
   jobs:  
-  - job: Build-Solution  
+  - job: Build  
     steps:  
     - script: cd src
     - script: dotnet build -c Debug  
