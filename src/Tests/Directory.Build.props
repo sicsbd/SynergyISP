@@ -1,6 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <Root>..\..\..</Root>
+        <Root>..</Root>
         <TestRoot>$(Root)\Tests</TestRoot>
         <DefaultGeneratedCoverageResultsDir>$(TestRoot)\Results</DefaultGeneratedCoverageResultsDir>
         <DefaultGeneratedCoverageReportsDir>$(TestRoot)\Reports</DefaultGeneratedCoverageReportsDir>
