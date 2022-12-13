@@ -3,17 +3,30 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-trigger:
+pr:
 - dev
 
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+stages:  
+- stage: Build  
+  jobs:  
+  - job: Build-Solution  
+    steps:  
+    - script: cd src
+    - script: dotnet build -c Debug  
+- stage: Test  
+  jobs:  
+  - job: UnitTest  
+    steps:  
+    - script: cd src
+    - script: dotnet test Tests/**/*UnitTests/UnitTests.csproj -c Debug 
+  - job: IntegrationTest  
+    steps:  
+    - script: cd src
+    - script: dotnet test Tests/**/*IntegrationTests/IntegrationTests.csproj -c Debug
+  - job: UITest  
+    steps:  
+    - script: cd src
+    - script: dotnet test Tests/**/*.UITests/*.UITests.csproj -c Debug --collect:"XPlat Code Coevrage" --logger "trx" /p:CollectCoverage=true /p:CoverletOutput=./Tests/TestReports --% /p:CoverletOutputFormat=\"opencover,cobertura\"
