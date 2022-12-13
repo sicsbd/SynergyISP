@@ -27,6 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence", "Infrastructu
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FDF1FEC0-A995-4058-B516-24571B7B8C60}"
 	ProjectSection(SolutionItems) = preProject
+		CodeCoverage.Coverlet.Props = CodeCoverage.Coverlet.Props
 		Tests\CodeCoverage.targets = Tests\CodeCoverage.targets
 		Tests\Directory.Build.props = Tests\Directory.Build.props
 		Tests\TestPackages.props = Tests\TestPackages.props

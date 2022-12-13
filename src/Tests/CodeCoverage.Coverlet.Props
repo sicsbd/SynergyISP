@@ -1,0 +1,12 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <CollectCoverage>true</CollectCoverage>
+        <CoverletOutput>$(DefaultGeneratedCoverageResultsDir)\</CoverletOutput>
+        <CoverletOutputFormat>cobertura,opencover</CoverletOutputFormat>
+    </PropertyGroup>
+
+    <Import Project="TestPackages.props" />
+    <Import Project="CodeCoverage.Coverlet.props" />
+    <Import Project="CodeCoverage.targets" />
+    
+</Project>

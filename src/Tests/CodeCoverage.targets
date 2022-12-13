@@ -1,4 +1,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="CodeCoverage.Coverlet.props" />
+    
 	<Target Name="GenerateCoverageReports" AfterTargets="GenerateCoverageResultAfterTest">
         <ItemGroup>
             <CoverageResultFiles Include="$(DefaultGeneratedCoverageResultsDir)\coverage.opencover.xml" />
