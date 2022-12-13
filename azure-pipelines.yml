@@ -20,10 +20,10 @@ stages:
   jobs:  
   - job: UnitTest  
     steps:  
-    - script: cd src && dotnet test ./Tests/**/*UnitTests/UnitTests.csproj -c Debug 
+    - script: cd src && dotnet test ./Tests/**/*UnitTests/UnitTests.csproj -c Debug  --collect:"XPlat Code Coevrage" --logger "trx" /p:CollectCoverage=true /p:CoverletOutput=./Tests/Results --% /p:CoverletOutputFormat=\"opencover,cobertura\"
   - job: IntegrationTest  
     steps:  
-    - script: cd src && dotnet test ./Tests/**/*IntegrationTests/IntegrationTests.csproj -c Debug
+    - script: cd src && dotnet test ./Tests/**/*IntegrationTests/*IntegrationTests.csproj -c Debug --collect:"XPlat Code Coevrage" --logger "trx" /p:CollectCoverage=true /p:CoverletOutput=./Tests/Results --% /p:CoverletOutputFormat=\"opencover,cobertura\"
   - job: UITest  
     steps:  
     - script: cd src && dotnet test ./Tests/**/*.UITests/*.UITests.csproj -c Debug --collect:"XPlat Code Coevrage" --logger "trx" /p:CollectCoverage=true /p:CoverletOutput=./Tests/Results --% /p:CoverletOutputFormat=\"opencover,cobertura\"

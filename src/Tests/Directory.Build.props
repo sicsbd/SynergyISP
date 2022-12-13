@@ -2,8 +2,7 @@
     <PropertyGroup>
         <TestRoot>$(Root)\Tests</TestRoot>
         <DefaultGeneratedCoverageResultsDir>$(TestRoot)\Results</DefaultGeneratedCoverageResultsDir>
-        <DefaultGeneratedCoverageReportsDir>$(TestRoot)\Reports</DefaultGeneratedCoverageReportsDir>
-        
+        <DefaultGeneratedCoverageReportsDir>$(TestRoot)\Reports</DefaultGeneratedCoverageReportsDir>        
         <DefaultCoverletGeneratedCoverageResultsDir>$(DefaultGeneratedCoverageResultsDir)\Coverlet</DefaultCoverletGeneratedCoverageResultsDir>
     </PropertyGroup>
 
