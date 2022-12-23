@@ -23,7 +23,7 @@ stages:
   jobs:  
   - job: UnitTest  
     steps:  
-    - cd src
+    - script: cd src
     - script: dotnet test ./Tests/Domain/UnitTests/UnitTests.csproj -c Release
     - script: dotnet test ./Tests/Application/UnitTests/UnitTests.csproj -c Release
   - job: IntegrationTest  
