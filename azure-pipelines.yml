@@ -21,17 +21,15 @@ stages:
   jobs:  
   - job: Build  
     steps:
-    - script: cd src
-    - script: dotnet build ./SynergyISP.sln -c Release 
+    - script: dotnet build src/SynergyISP.sln -c Release 
     #condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
 - stage: Test 
   dependsOn: Build
   jobs:  
   - job: UnitTest  
     steps:  
-    - script: cd src
-    - script: dotnet test ./Tests/Domain/UnitTests/UnitTests.csproj -c Release
-    - script: dotnet test ./Tests/Application/UnitTests/UnitTests.csproj -c Release
+    - script: dotnet test src/Tests/Domain/UnitTests/UnitTests.csproj -c Release
+    - script: dotnet test src/Tests/Application/UnitTests/UnitTests.csproj -c Release
     #condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
   - job: IntegrationTest  
     steps:  
