@@ -21,6 +21,7 @@ stages:
   jobs:  
   - job: Build  
     steps:
+    - script: ls src/Tests
     - script: dotnet build src/SynergyISP.sln -c Release 
     #condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
 - stage: Test 
