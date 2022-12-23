@@ -10,7 +10,12 @@ pr:
     include:
     - dev
     exclude:
-    - *
+    - '*'
+
+trigger:
+  branches:
+    exclude:
+    - '*'
 
 pool:
   vmImage: ubuntu-latest
