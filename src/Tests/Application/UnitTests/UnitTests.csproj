@@ -5,9 +5,12 @@
         <IsPackable>false</IsPackable>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <AssemblyName>SynergyISP.Application.IntegrationTests</AssemblyName>
+        <AssemblyName>SynergyISP.Application.UnitTests</AssemblyName>
         <RootNamespace>$(AssemblyName)</RootNamespace>
     </PropertyGroup>
+
+    <Import Project="$(TestRoot)\TestPackages.props" />
+    <Import Project="$(TestRoot)\CodeCoverage.Coverlet.props" />
 
     <ItemGroup>
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0" />
@@ -39,6 +42,9 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Application\Core\Core.csproj" />
+      <ProjectReference Include="..\..\Core\Core.csproj" />
     </ItemGroup>
+
+    <Import Project="$(TestRoot)\CodeCoverage.targets" />
 
 </Project>

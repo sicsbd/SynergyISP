@@ -1,9 +1,12 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Import Project="$(TestRoot)\CodeCoverage.Coverlet.props" />
-    
-	<Target Name="GenerateCoverageReports" AfterTargets="GenerateCoverageResultAfterTest">
+    <Target Name="GenerateCoverageReports" AfterTargets="GenerateCoverageResultAfterTest">
         <ItemGroup>
-            <CoverageResultFiles Include="$(DefaultGeneratedCoverageResultsDir)\coverage.opencover.xml" />
+            <CoverageResultFiles Include="$(DefaultGeneratedCoverageResultsDir)\SynergyISP.Domain.UnitTests.xml" />
+            <CoverageResultFiles Include="$(DefaultGeneratedCoverageResultsDir)\SynergyISP.Application.UnitTests.xml" />
+            <CoverageResultFiles Include="$(DefaultGeneratedCoverageResultsDir)\SynergyISP.Application.IntegrationTests.xml" />
+            <CoverageResultFiles Include="$(DefaultGeneratedCoverageResultsDir)\SynergyISP.Presentation.APIs.IntegrationTests.xml" />
+            <CoverageResultFiles Include="$(DefaultGeneratedCoverageResultsDir)\SynergyISP.Presentation.Apps.Portal.UITests.xml" />
+            <CoverageResultFiles Include="$(DefaultGeneratedCoverageResultsDir)\SynergyISP.Presentation.Apps.Landing.UITests.xml" />
         </ItemGroup>
         <ReportGenerator ReportFiles="@(CoverageResultFiles)" TargetDirectory="$(DefaultGeneratedCoverageReportsDir)" ReportTypes="HtmlSummary;TextSummary;SonarQube;Badges" VerbosityLevel="Verbose" />
     </Target>

@@ -1,7 +1,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <CollectCoverage>true</CollectCoverage>
-        <CoverletOutput>$(DefaultGeneratedCoverageResultsDir)\</CoverletOutput>
-        <CoverletOutputFormat>cobertura,opencover</CoverletOutputFormat>
+        <CoverletOutputFormat>opencover</CoverletOutputFormat>
+        <CoverletOutput>$(DefaultGeneratedCoverageResultsDir)\$(AssemblyName).xml</CoverletOutput>
     </PropertyGroup>    
 </Project>

@@ -43,4 +43,8 @@
         <SupportedPlatform Include="browser" />
     </ItemGroup>
 
+    <ItemGroup>
+        <InternalsVisibleTo Include="$(AssemblyName).UITests" />
+    </ItemGroup>
+
 </Project>

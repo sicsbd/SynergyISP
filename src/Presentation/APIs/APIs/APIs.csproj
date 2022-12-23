@@ -32,4 +32,8 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+    <ItemGroup>
+        <InternalsVisibleTo Include="$(AssemblyName).IntegrationTests" />
+    </ItemGroup>
+
 </Project>
