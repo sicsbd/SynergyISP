@@ -4,7 +4,18 @@
 # https://aka.ms/yaml
 
 pr:
-- dev
+  autoCancel: true
+  drafts: true
+  branches:
+    include:
+    - dev
+    exclude:
+    - *
+
+trigger:
+  branches:
+    exclude:
+    - *
 
 pool:
   vmImage: ubuntu-latest
@@ -16,8 +27,9 @@ stages:
 - stage: Build  
   jobs:  
   - job: Build  
-    steps:  
-    - script: cd src && dotnet build ./SynergyISP.sln -c Release  
+    steps:
+    - script: cd src
+    - script: dotnet build ./SynergyISP.sln -c Release  
 - stage: Test 
   dependsOn: Build
   jobs:  
