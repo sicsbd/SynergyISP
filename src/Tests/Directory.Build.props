@@ -1,13 +1,13 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
+        <Root>..\..\..</Root>
         <TestRoot>$(Root)\Tests</TestRoot>
         <DefaultGeneratedCoverageResultsDir>$(TestRoot)\Results</DefaultGeneratedCoverageResultsDir>
         <DefaultGeneratedCoverageReportsDir>$(TestRoot)\Reports</DefaultGeneratedCoverageReportsDir>
-        
-        <DefaultCoverletGeneratedCoverageResultsDir>$(DefaultGeneratedCoverageResultsDir)\Coverlet</DefaultCoverletGeneratedCoverageResultsDir>
     </PropertyGroup>
 
-    <Import Project="TestPackages.props" />
-    <Import Project="CodeCoverage.targets" />
+    <ItemGroup>
+        <AssemblyAttribute Include="System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute" />
+    </ItemGroup>
     
 </Project>

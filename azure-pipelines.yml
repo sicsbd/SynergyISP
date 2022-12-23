@@ -1,0 +1,42 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+pr:
+  autoCancel: true
+  drafts: true
+  branches:
+    include:
+    - dev
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  configuration: Release
+
+stages:  
+- stage: Build  
+  jobs:  
+  - job: Build  
+    steps:
+    - script: ls src/Tests
+    - script: dotnet build src/SynergyISP.sln -c Release 
+    #condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
+- stage: Test 
+  dependsOn: Build
+  jobs:  
+  - job: UnitTest  
+    steps:  
+    - script: dotnet test src/Tests/Domain/UnitTests/UnitTests.csproj -c Release
+    - script: dotnet test src/Tests/Application/UnitTests/UnitTests.csproj -c Release
+    #condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
+  - job: IntegrationTest  
+    steps:  
+    - script: cd src && dotnet test ./Tests/**/*IntegrationTests/*IntegrationTests.csproj -c Release
+    condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
+  - job: UITest  
+    steps:  
+    - script: cd src && dotnet test ./Tests/**/*.UITests/*.UITests.csproj -c Release
+    #condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
