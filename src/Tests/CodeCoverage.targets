@@ -1,4 +1,9 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <CollectCoverage>true</CollectCoverage>
+        <CoverletOutputFormat>opencover</CoverletOutputFormat>
+        <CoverletOutput>$(DefaultGeneratedCoverageResultsDir)\$(AssemblyName).xml</CoverletOutput>
+    </PropertyGroup>
     <Target Name="GenerateCoverageReports" AfterTargets="GenerateCoverageResultAfterTest">
         <ItemGroup>
             <CoverageResultFiles Include="$(DefaultGeneratedCoverageResultsDir)\SynergyISP.Domain.UnitTests.xml" />

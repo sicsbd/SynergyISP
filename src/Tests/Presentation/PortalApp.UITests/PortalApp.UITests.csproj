@@ -10,7 +10,7 @@
     </PropertyGroup>
 
     <Import Project="$(TestRoot)\TestPackages.props" />
-    <Import Project="$(TestRoot)\CodeCoverage.Coverlet.props" />
+    <Import Project="$(TestRoot)\CodeCoverage.targets" />
 
     <ItemGroup>
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0" />

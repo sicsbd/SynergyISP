@@ -10,7 +10,7 @@
     </PropertyGroup>
 
     <Import Project="$(TestRoot)\TestPackages.props" />
-    <Import Project="$(TestRoot)\CodeCoverage.Coverlet.props" />
+    <Import Project="$(TestRoot)\CodeCoverage.targets" />
 
     <ItemGroup>
         <None Remove="appsettings.json" />
