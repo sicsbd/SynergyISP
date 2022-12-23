@@ -23,7 +23,7 @@ stages:
     steps:
     - script: cd src
     - script: dotnet build ./SynergyISP.sln -c Release 
-    condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
+    #condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
 - stage: Test 
   dependsOn: Build
   jobs:  
@@ -32,7 +32,7 @@ stages:
     - script: cd src
     - script: dotnet test ./Tests/Domain/UnitTests/UnitTests.csproj -c Release
     - script: dotnet test ./Tests/Application/UnitTests/UnitTests.csproj -c Release
-    condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
+    #condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
   - job: IntegrationTest  
     steps:  
     - script: cd src && dotnet test ./Tests/**/*IntegrationTests/*IntegrationTests.csproj -c Release
@@ -40,4 +40,4 @@ stages:
   - job: UITest  
     steps:  
     - script: cd src && dotnet test ./Tests/**/*.UITests/*.UITests.csproj -c Release
-    condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
+    #condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
