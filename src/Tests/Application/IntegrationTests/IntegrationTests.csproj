@@ -9,6 +9,9 @@
         <RootNamespace>$(AssemblyName)</RootNamespace>
     </PropertyGroup>
 
+    <Import Project="$(TestRoot)\TestPackages.props" />
+    <Import Project="$(TestRoot)\CodeCoverage.Coverlet.props" />
+
     <ItemGroup>
         <None Remove="appsettings.json" />
     </ItemGroup>

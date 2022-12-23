@@ -4,12 +4,24 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{187F6D74-679A-4DDA-853D-8B0B28AD09C6}"
+	ProjectSection(SolutionItems) = preProject
+		Domain\Directory.Build.props = Domain\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{1F7D3F69-08B3-4439-910D-1D9A6B39AC55}"
+	ProjectSection(SolutionItems) = preProject
+		Application\Directory.Build.props = Application\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{230C45D6-880B-4FE1-845F-E7DFAC811AE0}"
+	ProjectSection(SolutionItems) = preProject
+		Infrastructure\Directory.Build.props = Infrastructure\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{22D48C95-DE01-4D68-866B-D4B79B3949BB}"
+	ProjectSection(SolutionItems) = preProject
+		Presentation\Directory.Build.props = Presentation\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Domain\Core\Core.csproj", "{3D9273BC-7F2D-456D-83FB-D618DEBA7260}"
 EndProject
@@ -55,6 +67,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{399963F7-0701-4109-A69B-C454D01B2605}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		..\.gitignore = ..\.gitignore
 		..\azure-pipelines.yml = ..\azure-pipelines.yml
 		Directory.Build.props = Directory.Build.props
 		global.json = global.json
@@ -63,6 +76,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kernel", "Application\Kernel\Kernel.csproj", "{ECF864A6-F731-4519-A40E-FC203FBCAD16}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{ADCB684E-E432-4E54-A569-7BB55F5A74AB}"
+	ProjectSection(SolutionItems) = preProject
+		Presentation\Apps\Directory.Build.props = Presentation\Apps\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIs", "Presentation\APIs\APIs\APIs.csproj", "{4E5DA167-358D-490D-98CB-56FEAB5B979C}"
 EndProject
@@ -75,6 +91,13 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandingApp.Client", "Presentation\Apps\LandingApp.Client\LandingApp.Client.csproj", "{1184BF7F-067B-4901-8AD4-32C3313FF332}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LandingApp.Server", "Presentation\Apps\LandingApp.Server\LandingApp.Server.csproj", "{F9CF32D0-4B26-458C-8305-F4CC4B24584B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Tests\Core\Core.csproj", "{10E08CF8-8A8D-4EA9-AC72-07250390F9D9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{A0CFF7A3-CC9A-4544-B8B6-D907B421ADB3}"
+	ProjectSection(SolutionItems) = preProject
+		Presentation\APIs\Directory.Build.props = Presentation\APIs\Directory.Build.props
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -162,6 +185,10 @@ Global
 		{F9CF32D0-4B26-458C-8305-F4CC4B24584B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9CF32D0-4B26-458C-8305-F4CC4B24584B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9CF32D0-4B26-458C-8305-F4CC4B24584B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10E08CF8-8A8D-4EA9-AC72-07250390F9D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10E08CF8-8A8D-4EA9-AC72-07250390F9D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10E08CF8-8A8D-4EA9-AC72-07250390F9D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10E08CF8-8A8D-4EA9-AC72-07250390F9D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -186,12 +213,14 @@ Global
 		{B33DB18B-A2E8-45EE-B705-1BE3AB375657} = {D01627FD-D208-4566-96AC-FBBFEB162B07}
 		{ECF864A6-F731-4519-A40E-FC203FBCAD16} = {1F7D3F69-08B3-4439-910D-1D9A6B39AC55}
 		{ADCB684E-E432-4E54-A569-7BB55F5A74AB} = {22D48C95-DE01-4D68-866B-D4B79B3949BB}
-		{4E5DA167-358D-490D-98CB-56FEAB5B979C} = {22D48C95-DE01-4D68-866B-D4B79B3949BB}
+		{4E5DA167-358D-490D-98CB-56FEAB5B979C} = {A0CFF7A3-CC9A-4544-B8B6-D907B421ADB3}
 		{DFD936B5-B3BF-47C9-9173-1866B272243E} = {ADCB684E-E432-4E54-A569-7BB55F5A74AB}
 		{FD5833F9-9157-41E3-B149-08844DB63761} = {ADCB684E-E432-4E54-A569-7BB55F5A74AB}
 		{19567FD4-FCCD-40BB-A0C3-FFB742862E13} = {ADCB684E-E432-4E54-A569-7BB55F5A74AB}
 		{1184BF7F-067B-4901-8AD4-32C3313FF332} = {ADCB684E-E432-4E54-A569-7BB55F5A74AB}
 		{F9CF32D0-4B26-458C-8305-F4CC4B24584B} = {ADCB684E-E432-4E54-A569-7BB55F5A74AB}
+		{10E08CF8-8A8D-4EA9-AC72-07250390F9D9} = {FDF1FEC0-A995-4058-B516-24571B7B8C60}
+		{A0CFF7A3-CC9A-4544-B8B6-D907B421ADB3} = {22D48C95-DE01-4D68-866B-D4B79B3949BB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6E759129-7AB8-4B10-8076-BD10FF10C3F8}

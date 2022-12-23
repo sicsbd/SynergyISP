@@ -9,6 +9,10 @@
         <RootNamespace>$(AssemblyName)</RootNamespace>
     </PropertyGroup>
 
+    <Import Project="$(TestRoot)\TestPackages.props" />
+    <Import Project="$(TestRoot)\CodeCoverage.Coverlet.props" />
+    <Import Project="$(TestRoot)\CodeCoverage.targets" />
+
     <ItemGroup>
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0" />
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing.XUnit" Version="1.1.1" />
