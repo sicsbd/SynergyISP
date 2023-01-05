@@ -20,6 +20,9 @@ public abstract class CustomAppFactory<TStartup> : WebApplicationFactory<TStartu
     protected int _kafkaPort = Random.Shared.Next(10000, 60000);
     protected int _rabbitMQPort = Random.Shared.Next(10000, 60000);
 
+    /// <summary>
+    /// Builds the containers.
+    /// </summary>
     protected void BuildContainers()
     {
         DbContainer = ContainerHelper

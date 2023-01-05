@@ -8,6 +8,11 @@ using Microsoft.AspNetCore.Hosting.Server.Features;
 [ExcludeFromCodeCoverage]
 internal class Program
 {
+    /// <summary>
+    /// Mains the.
+    /// </summary>
+    /// <param name="args">The args.</param>
+    /// <returns>A Task.</returns>
     private static async Task Main(string[] args)
     {
         var builder = WebAssemblyHostBuilder.CreateDefault(args);

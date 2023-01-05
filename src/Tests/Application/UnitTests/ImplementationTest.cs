@@ -9,12 +9,18 @@ namespace SynergyISP.Application.UnitTests;
 [TestFixture]
 public class ImplementationTest : NUnitTestBase<IInterface>
 {
+    /// <summary>
+    /// Setups the.
+    /// </summary>
     [SetUp]
     public void Setup()
     {
         this.service = new Implementation();
     }
 
+    /// <summary>
+    /// Dos the test.
+    /// </summary>
     [Test]
     public void DoTest()
     {

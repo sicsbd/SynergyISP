@@ -7,8 +7,14 @@ namespace SynergyISP.Presentation.Apps.Portal.Server.Pages;
 [IgnoreAntiforgeryToken]
 public class ErrorModel : PageModel
 {
+    /// <summary>
+    /// Gets or sets the request id.
+    /// </summary>
     public string? RequestId { get; set; }
 
+    /// <summary>
+    /// Gets a value indicating whether show request id.
+    /// </summary>
     public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 
     private readonly ILogger<ErrorModel> _logger;
@@ -18,6 +24,9 @@ public class ErrorModel : PageModel
         _logger = logger;
     }
 
+    /// <summary>
+    /// Ons the get.
+    /// </summary>
     public void OnGet()
     {
         RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
