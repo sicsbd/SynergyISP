@@ -1,7 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿namespace SynergyISP.Infrastructure;
 
-namespace SynergyISP.Infrastructure;
+using System.Reflection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 public static class DependencyInjection
 {
     /// <summary>
@@ -11,7 +12,8 @@ public static class DependencyInjection
     /// <param name="configuration">The configuration.</param>
     /// <returns>An IServiceCollection.</returns>
     public static IServiceCollection AddInfrastructure(
-        this IServiceCollection services, IConfiguration configuration)
+        this IServiceCollection services,
+        IConfiguration configuration)
     {
         return services;
     }

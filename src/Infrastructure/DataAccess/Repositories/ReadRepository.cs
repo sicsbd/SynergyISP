@@ -7,9 +7,9 @@ using System.Linq.Expressions;
 using System.Threading;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Domain.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using SynergyISP.Domain.Abstractions;
 
 internal class ReadRepository<TEntity, TKey, TAggregateRoot>
     : IReadRepository<TEntity, TKey, TAggregateRoot>
@@ -34,113 +34,70 @@ internal class ReadRepository<TEntity, TKey, TAggregateRoot>
         _mapper = mapper;
     }
 
-    /// <inheritdoc/>
-    public IEnumerable<TAggregateRoot> GetAll()
-    {
-        return Set.Select(e => e as TAggregateRoot).AsEnumerable();
-    }
+    #region GetAll
 
-    public IAsyncEnumerable<TAggregateRoot> GetAllAsync(CancellationToken cancellationToken = default)
+    /// <inheritdoc/>
+    public IQueryable<TAggregateRoot?> GetAll()
     {
-        return Set.Select(e => e as TAggregateRoot).AsAsyncEnumerable();
+        return Set.Select(e => e as TAggregateRoot);
     }
 
     /// <inheritdoc/>
-    public Task<List<TAggregateRoot>> GetAllListAsync(CancellationToken cancellationToken = default)
+    public IQueryable<TAggregateRoot?> GetAll(ISpecification<TEntity, TKey> specification)
     {
-        return Set.Select(e => e as TAggregateRoot).ToListAsync(cancellationToken);
+        return ApplySpecification(specification).Select(e => e as TAggregateRoot);
+    }
+
+    public IQueryable<TReturnType?> GetAll<TReturnType>()
+    {
+        return Set.ProjectTo<TReturnType>(_configurationProvider, parameters: null);
     }
 
     /// <inheritdoc/>
-    public IEnumerable<TAggregateRoot> GetAll(Expression<Func<TEntity, bool>> predicate)
+    public IQueryable<TReturnType?> GetAll<TReturnType>(ISpecification<TEntity, TKey> specification)
     {
-        return Set.Where(predicate).Select(e => e as TAggregateRoot).AsEnumerable();
+        return ApplySpecification(specification).ProjectTo<TReturnType>(_configurationProvider, parameters: null);
     }
 
-    /// <inheritdoc/>
-    public IAsyncEnumerable<TAggregateRoot> GetAllAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
-    {
-        return Set.Where(predicate).Select(e => e as TAggregateRoot).AsAsyncEnumerable(cancellationToken);
-    }
-
-    /// <inheritdoc/>
-    public Task<IList<TAggregateRoot>> GetAllListAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
-    {
-        return Set.Where(predicate).Select(e => e as TAggregateRoot).ToListAsync(cancellationToken);
-    }
-
-    public IEnumerable<TAggregateRoot> GetAll<TReturnType>()
-    {
-        return Set.ProjectTo<TReturnType>(_configurationProvider, parameters: null).AsEnumerable();
-    }
-
-    /// <inheritdoc/>
-    public IAsyncEnumerable<TReturnType> GetAllAsync<TReturnType>(CancellationToken cancellationToken = default)
-    {
-        return Set.ProjectTo<TReturnType>(_configurationProvider, parameters: null).AsAsyncEnumerable();
-    }
-
-    /// <inheritdoc/>
-    public Task<IList<TReturnType>> GetAllListAsync<TReturnType>(CancellationToken cancellationToken = default)
-    {
-        return Set.ProjectTo<TReturnType>(_configurationProvider, parameters: null).ToListAsync(cancellationToken);
-    }
-
-    /// <inheritdoc/>
-    public IEnumerable<TReturnType> GetAll<TReturnType>(Expression<Func<TEntity, bool>> predicate)
-    {
-        return Set.Where(predicate).ProjectTo<TReturnType>(_configurationProvider, parameters: null).AsAsyncEnumerable();
-    }
-
-    /// <inheritdoc/>
-    public IAsyncEnumerable<TReturnType> GetAllAsync<TReturnType>(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
-    {
-        return Set.Where(predicate).ProjectTo<TReturnType>(_configurationProvider, parameters: null).ToListAsync(cancellationToken);
-    }
-
-    /// <inheritdoc/>
-    public Task<IList<TReturnType>> GetAllListAsync<TReturnType>(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
-    {
-        return Set.Where(predicate).ProjectTo<TReturnType>(_configurationProvider, parameters: null).ToListAsync(cancellationToken);
-    }
+    #endregion
 
     #region Single
-    public TAggregateRoot Get(TKey key)
+    public TAggregateRoot? Get(TKey key)
     {
-        return Set.Select(e => e as TAggregateRoot).First(e => e.Id == key);
+        return Set.Where(e => e.Id == key).Select(e => e as TAggregateRoot).First();
     }
 
-    public TAggregateRoot GetSingle(TKey key)
+    public TAggregateRoot? GetSingle(TKey key)
     {
-        return Set.Select(e => e as TAggregateRoot).Single(e => e.Id == key);
+        return Set.Where(e => e.Id == key).Select(e => e as TAggregateRoot).Single();
     }
 
-    public TAggregateRoot Get(Expression<Func<TEntity, bool>> predicate)
+    public TAggregateRoot? Get(ISpecification<TEntity, TKey> specification)
     {
-        return Set.First(predicate);
+        return ApplySpecification(specification).Select(e => e as TAggregateRoot).First();
     }
 
-    public TAggregateRoot GetSingle(Expression<Func<TEntity, bool>> predicate)
+    public TAggregateRoot? GetSingle(ISpecification<TEntity, TKey> specification)
     {
-        return Set.Select(e => e as TAggregateRoot).Single(predicate);
+        return ApplySpecification(specification).Select(e => e as TAggregateRoot).Single();
     }
 
-    public Task<TAggregateRoot> GetAsync(TKey key, CancellationToken cancellationToken = default)
+    public Task<TAggregateRoot?> GetAsync(TKey key, CancellationToken cancellationToken = default)
     {
-        return Set.Select(e => e as TAggregateRoot).FirstAsync(e => e.Id == key, cancellationToken);
+        return Set.Where(e => e.Id == key).Select(e => e as TAggregateRoot).FirstAsync(cancellationToken);
     }
 
-    public Task<TAggregateRoot> GetSingleAsync(TKey key, CancellationToken cancellationToken = default)
+    public Task<TAggregateRoot?> GetSingleAsync(TKey key, CancellationToken cancellationToken = default)
     {
-        return Set.Select(e => e as TAggregateRoot).SingleAsync(e => e.Id == key, cancellationToken);
+        return Set.Where(e => e.Id == key).Select(e => e as TAggregateRoot).SingleAsync(cancellationToken);
     }
 
-    public Task<TAggregateRoot> GetAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default)
+    public Task<TAggregateRoot?> GetAsync(ISpecification<TEntity, TKey> specification, CancellationToken cancellationToken = default)
     {
-        return Set.Where(predicate).Select(e => e as TAggregateRoot).FirstAsync(cancellationToken);
+        return ApplySpecification(specification).Select(e => e as TAggregateRoot).FirstAsync(cancellationToken);
     }
 
-    public Task<TAggregateRoot> GetSingleAsync(ISpecification<TEntity, TKey> specification)
+    public Task<TAggregateRoot?> GetSingleAsync(ISpecification<TEntity, TKey> specification, CancellationToken cancellationToken = default)
     {
         return ApplySpecification(specification).Select(e => e as TAggregateRoot).SingleAsync(cancellationToken);
     }
@@ -169,7 +126,7 @@ internal class ReadRepository<TEntity, TKey, TAggregateRoot>
 
         foreach (var orderClause in specification.OrderByClauses)
         {
-            query = orderClause.Value == SortOrder.Ascending
+            query = orderClause.Value.Equals(SortOrder.Ascending)
                   ? query.OrderBy(orderClause.Key)
                   : query.OrderByDescending(orderClause.Key);
         }

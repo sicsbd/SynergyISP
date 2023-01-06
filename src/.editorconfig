@@ -180,6 +180,7 @@ dotnet_diagnostic.SA1310.severity = silent
 dotnet_diagnostic.SX1309S.severity = silent
 dotnet_diagnostic.SA1633.severity = silent
 dotnet_diagnostic.SA1309.severity = silent
+dotnet_diagnostic.SA1124.severity = silent
 
 #### Naming styles ####
 [*.{cs,vb}]

@@ -5,7 +5,7 @@ using Domain.Entities;
 using Domain.Enumns;
 using Domain.ValueObjects;
 public record class GetUserWithProfileByIdSpec
-    : ISpecification<User<UserId>, UserId>, IPagedSpecification<User<UserId>, UserId>
+    : ISpecification<User<UserId>, UserId>
 {
     public GetUserWithProfileByIdSpec(UserId id)
     {
