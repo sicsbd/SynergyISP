@@ -10,7 +10,7 @@ public abstract record class AuditableEntity<TKey>
     where TKey : Id
 {
     private IHttpContextAccessor? _httpContextAccessor;
-
+    
     /// <summary>
     /// Initializes a new instance of the <see cref="AuditableEntity{TKey}"/> class.
     /// </summary>

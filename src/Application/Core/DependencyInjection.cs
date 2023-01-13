@@ -39,8 +39,9 @@ public static class DependencyInjection
         Assembly[] scanAssemblies = assemblies.Concat(GetAssemblies()).ToArray();
         MapperConfiguration conf = PopulateConfiguration(scanAssemblies);
         services.AddSingleton(conf);
-        services.AddSingleton<IConfigurationProvider, MapperConfigurationProvider>();
-        services.AddSingleton(_ => conf.CreateMapper());
+        var mapper = conf.CreateMapper();
+        services.AddSingleton(_ => mapper.ConfigurationProvider);
+        services.AddSingleton(_ => mapper);
         return services;
     }
 

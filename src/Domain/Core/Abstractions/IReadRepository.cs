@@ -1,5 +1,4 @@
 ﻿namespace SynergyISP.Domain.Abstractions;
-using System.Linq.Expressions;
 public interface IReadRepository<TEntity, TKey, TAggregateRoot>
     where TEntity : class, IEntity<TKey>, IAggregateRoot<TEntity, TKey>
     where TKey : Id

@@ -1,6 +1,7 @@
 ﻿namespace SynergyISP.Domain.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 /// <summary>
 /// The data context for write operations.
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 public interface IWriteDataContext
 {
     ChangeTracker ChangeTracker { get; }
+    DatabaseFacade Database { get; }
 
     DbSet<TEntity> Set<TEntity>()
         where TEntity : class;

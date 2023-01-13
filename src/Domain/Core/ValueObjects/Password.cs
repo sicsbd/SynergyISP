@@ -5,22 +5,27 @@ using System.Security.Cryptography;
 using System.Text;
 using Abstractions;
 using Helpers;
+using Newtonsoft.Json;
 
 public record class Password : IPassword<Password>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="Password"/> class.
     /// </summary>
+    public Password() => Value = string.Empty;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Password"/> class.
+    /// </summary>
     /// <param name="password">The password.</param>
-    protected Password(string password)
-    {
-        Value = password.ComputeHash(SHA512.Create(), Encoding.UTF8);
-    }
+    [JsonConstructor]
+    public Password(string password)
+        => Value = password.ComputeHash(SHA512.Create(), Encoding.UTF8);
 
     /// <summary>
     /// Gets or inits the value.
     /// </summary>
-    protected string Value { get; init; }
+    public string Value { get; protected init; }
 
     /// <summary>
     /// Creates a new instance on Password.

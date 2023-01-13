@@ -1,18 +1,15 @@
 ﻿namespace SynergyISP.Domain.ValueObjects;
 using Abstractions;
+using Newtonsoft.Json;
+using SynergyISP.Domain.Helpers;
 
-public record class Name : IValueObject
+public readonly record struct Name : IValueObject, IEquatable<string>
 {
-    /// <summary>
-    /// Gets or sets the value.
-    /// </summary>
-    protected string Value { get; set; }
-
     /// <summary>
     /// Initializes a new instance of the <see cref="Name"/> class.
     /// Prevents a default instance of the <see cref="UserName"/> class from being created.
     /// </summary>
-    protected Name()
+    public Name()
     {
         Value = string.Empty;
     }
@@ -22,10 +19,16 @@ public record class Name : IValueObject
     /// Prevents a default instance of the <see cref="UserName"/> class from being created.
     /// </summary>
     /// <param name="name">name.</param>
-    protected Name(string name)
+    [JsonConstructor]
+    public Name(string name)
     {
         Value = name;
     }
+
+    /// <summary>
+    /// Gets or inits the value.
+    /// </summary>
+    public string Value { get; init; }
 
     /// <summary>
     /// News the.
@@ -42,7 +45,17 @@ public record class Name : IValueObject
 
     public static Name operator +(Name value1, Name value2)
     {
-        return new Name($"{value1.Trim()} {value2.Trim()}");
+        return new Name($"{value1.Trim()} {value2.Trim()}".Trim());
+    }
+
+    public static bool operator ==(Name value1, string value2)
+    {
+        return value1.Value.Equals(value2);
+    }
+
+    public static bool operator !=(Name value1, string value2)
+    {
+        return !value1.Value.Equals(value2);
     }
 
     /// <inheritdoc/>
@@ -64,5 +77,12 @@ public record class Name : IValueObject
     public Name Trim()
     {
         return new Name(Value.Trim());
+    }
+
+    /// <inheritdoc/>
+    public bool Equals(string? other)
+    {
+        return !(other?.IsNullOrWhiteSpace() ?? false)
+            && Value.Equals(other);
     }
 }

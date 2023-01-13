@@ -1,15 +1,33 @@
 ﻿namespace SynergyISP.Domain.ValueObjects;
-using Abstractions;
 
-public record class UserName : Name
+using System.Diagnostics.CodeAnalysis;
+using Abstractions;
+using Domain.Helpers;
+using Newtonsoft.Json;
+
+public readonly record struct UserName : IValueObject, IEquatable<string>
 {
     /// <summary>
-    /// Prevents a default instance of the <see cref="UserName"/> class from being created.
+    /// Initializes a new instance of the <see cref="UserName"/> class.
     /// </summary>
-    private UserName()
-        : base()
+    public UserName()
     {
     }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UserName"/> class.
+    /// </summary>
+    /// <param name="name">The name.</param>
+    [JsonConstructor]
+    public UserName(string name)
+    {
+        Value = name;
+    }
+
+    /// <summary>
+    /// Gets the value.
+    /// </summary>
+    public string Value { get; init; } = string.Empty;
 
     /// <summary>
     /// News the.
@@ -17,11 +35,10 @@ public record class UserName : Name
     /// <returns>An IValueObject.</returns>
     public static new IValueObject New()
     {
-        // unary binary
-        return new UserName();
+        return new UserName(string.Empty);
     }
 
-    public static implicit operator UserName(string value) => new () { Value = value };
+    public static implicit operator UserName(string value) => new() { Value = value };
 
     public static implicit operator string(UserName other) => other.Value;
 
@@ -29,5 +46,37 @@ public record class UserName : Name
     public override string ToString()
     {
         return Value.ToString();
+    }
+
+    public static bool operator ==(UserName value1, string value2)
+    {
+        return value1.Value.Equals(value2);
+    }
+
+    public static bool operator !=(UserName value1, string value2)
+    {
+        return !value1.Value.Equals(value2);
+    }
+
+    /// <inheritdoc/>
+    public override int GetHashCode()
+    {
+        return Value.GetHashCode();
+    }
+
+    /// <summary>
+    /// Trims the name.
+    /// </summary>
+    /// <returns>A Name.</returns>
+    public Name Trim()
+    {
+        return new Name(Value.Trim());
+    }
+
+    /// <inheritdoc/>
+    public bool Equals([NotNullWhen(true)] string? other)
+    {
+        return !(other?.IsNullOrWhiteSpace() ?? false)
+            && Value.Equals(other);
     }
 }

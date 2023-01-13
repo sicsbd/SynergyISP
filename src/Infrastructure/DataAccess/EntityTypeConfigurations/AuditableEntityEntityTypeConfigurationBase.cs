@@ -3,7 +3,7 @@ using SynergyISP.Domain.Abstractions;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 
-internal abstract class AuditableEntityEntityTypeConfigurationBase<TEntity, TKey>
+public abstract class AuditableEntityEntityTypeConfigurationBase<TEntity, TKey>
     : EntityTypeConfigurationBase<TEntity, TKey>
     where TEntity : AuditableEntity<TKey>, IEntity<TKey>
     where TKey : Id

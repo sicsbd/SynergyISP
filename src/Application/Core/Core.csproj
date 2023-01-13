@@ -18,10 +18,6 @@
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
-      <PackageReference Include="SonarAnalyzer.CSharp" Version="8.50.0.58025">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      </PackageReference>
       <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -31,6 +27,10 @@
     <ItemGroup>
       <ProjectReference Include="..\..\Domain\Core\Core.csproj" />
       <ProjectReference Include="..\Kernel\Kernel.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Common\Dtos\" />
     </ItemGroup>
 
 </Project>

@@ -3,6 +3,8 @@
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
 public static class DependencyInjection
 {
     /// <summary>
@@ -13,8 +15,16 @@ public static class DependencyInjection
     /// <returns>An IServiceCollection.</returns>
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services,
-        IConfiguration configuration)
+        IHostEnvironment hostEnvironment,
+        IConfiguration configuration,
+        string connectionStringName,
+        string noSqlConnectionStringName)
     {
+        services.AddDataAccess(
+            hostEnvironment,
+            configuration,
+            connectionStringName,
+            noSqlConnectionStringName);
         return services;
     }
 }

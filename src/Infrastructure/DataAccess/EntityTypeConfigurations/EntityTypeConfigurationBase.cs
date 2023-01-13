@@ -1,15 +1,16 @@
 ﻿namespace SynergyISP.Infrastructure.DataAccess.EntityTypeConfigurations;
-using SynergyISP.Domain.Abstractions;
+using Domain.Abstractions;
+using Domain.ValueObjects;
+using Humanizer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Humanizer;
 
-internal abstract class EntityTypeConfigurationBase<TEntity, TKey>
+public abstract class EntityTypeConfigurationBase<TEntity, TKey>
     : IEntityTypeConfiguration<TEntity>
     where TEntity : class, IEntity<TKey>
     where TKey : Id
 {
-    public void Configure(EntityTypeBuilder<TEntity> builder)
+    public virtual void Configure(EntityTypeBuilder<TEntity> builder)
     {
         SetEntityName(builder);
         BuildColumns(builder);
@@ -20,7 +21,13 @@ internal abstract class EntityTypeConfigurationBase<TEntity, TKey>
     public virtual void BuildColumns(EntityTypeBuilder<TEntity> builder)
     {
         builder.HasKey(e => e.Id);
-        builder.Property(e => e.Id).HasColumnType("uuid");
+        builder
+            .Property(e => e.Id)
+            .HasConversion(
+                v => Guid.Parse(v.ToString()),
+                v => (TKey)v)
+            .HasColumnType("uuid")
+            .HasDefaultValueSql("uuid_generate_v4()");
     }
 
     public abstract void BuildRelations(EntityTypeBuilder<TEntity> builder);

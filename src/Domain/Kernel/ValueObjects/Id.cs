@@ -1,26 +1,36 @@
 ﻿namespace SynergyISP.Domain.Abstractions;
+
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Newtonsoft.Json;
 
 public record class Id
-    : IValueObject, IEquatable<Id>, IEquatable<Guid>, IComparable<Id>, IComparable<Guid>, ICloneable
+    : IValueObject, IEquatable<Guid>, IComparable<Id>, IComparable<Guid>, ICloneable
 {
     /// <summary>
-    /// Gets or sets the Id value.
+    /// Initializes a new instance of the <see cref="Id"/> class.
     /// </summary>
-    protected Guid Value { get; set; }
+    public Id()
+    {
+        Value = Guid.NewGuid();
+    }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Id"/> class.
     /// Prevents a default instance of the <see cref="Id"/> class from being created.
     /// </summary>
     /// <param name="value">The value.</param>
-    protected Id(Guid value) => Value = value;
+    [JsonConstructor]
+    public Id(Guid value) => Value = value;
 
-    /// <inheritdoc />
-    public int CompareTo(Id? other) => other == null
-            ? 0
-            : Value.CompareTo(other.Value);
+    /// <summary>
+    /// Gets or inits the Id value.
+    /// </summary>
+    public Guid Value { get; init; }
+
+    /// <inheritdoc/>
+    public int CompareTo([NotNullWhen(true)] Id? other)
+        => Value.CompareTo(other!.Value);
 
     /// <inheritdoc />
     public int CompareTo(Guid other) => Value.CompareTo(other);
@@ -36,7 +46,7 @@ public record class Id
     {
         string json = JsonConvert.SerializeObject(this);
         byte[] jsonBytes = Encoding.UTF8.GetBytes(json);
-        using MemoryStream jsonStream = new (jsonBytes);
+        using MemoryStream jsonStream = new(jsonBytes);
         byte[] newJsonBytes = jsonStream.ToArray();
         string newJson = Encoding.UTF8.GetString(newJsonBytes);
         var obj = JsonConvert.DeserializeObject<Id>(newJson);
@@ -51,5 +61,11 @@ public record class Id
 
     public static implicit operator Guid(Id id) => id.Value;
 
-    public static implicit operator Id(Guid id) => new (id);
+    public static implicit operator Id(Guid id) => new(id);
+
+    /// <inheritdoc/>
+    public override string ToString()
+    {
+        return Value.ToString();
+    }
 }

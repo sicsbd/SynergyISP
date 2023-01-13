@@ -1,13 +1,14 @@
 ﻿namespace SynergyISP.Domain.Aggregates;
 
 using System;
+using Entities;
 using ValueObjects;
 
 /// <summary>
 /// The user profile aggregate.
 /// </summary>
-internal record class UserProfileAggregate
-    : IUserProfileAggregate
+public record class UserProfileAggregate
+    : IUserProfileAggregate<User<UserId>, UserId>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="UserProfileAggregate"/> class.
@@ -37,6 +38,11 @@ internal record class UserProfileAggregate
     /// Gets or inits the nick name.
     /// </summary>
     public Name? NickName { get; init; }
+
+    public IUserProfileAggregate<User<UserId>, UserId> ChangeProfile(UserId userId, string key, string value)
+    {
+        throw new NotImplementedException();
+    }
 
     /// <inheritdoc/>
     public void ResolveDependencies(IServiceProvider serviceProvider)

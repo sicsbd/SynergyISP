@@ -1,9 +1,5 @@
 ﻿namespace SynergyISP.Infrastructure.DataAccess.Repositories;
-
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -18,20 +14,17 @@ internal class ReadRepository<TEntity, TKey, TAggregateRoot>
     where TAggregateRoot : class, IAggregateRoot<TEntity, TKey>
 {
     private readonly IConfigurationProvider _configurationProvider;
-    private readonly IMapper _mapper;
 
     protected IReadDataContext DataContext { get; private set; }
     protected DbSet<TEntity> Set { get; private set; }
 
     public ReadRepository(
         IReadDataContext dataContext,
-        IConfigurationProvider configurationProvider,
-        IMapper mapper)
+        IConfigurationProvider configurationProvider)
     {
         DataContext = dataContext;
         Set = DataContext.Set<TEntity>();
         _configurationProvider = configurationProvider;
-        _mapper = mapper;
     }
 
     #region GetAll
@@ -50,7 +43,7 @@ internal class ReadRepository<TEntity, TKey, TAggregateRoot>
 
     public IQueryable<TReturnType?> GetAll<TReturnType>()
     {
-        return Set.ProjectTo<TReturnType>(_configurationProvider, parameters: null);
+        return Set.ProjectTo<TReturnType>(_configurationProvider);
     }
 
     /// <inheritdoc/>
