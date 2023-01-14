@@ -1,7 +1,7 @@
 ﻿namespace SynergyISP.Infrastructure.DataAccess.EntityTypeConfigurations;
 using Domain.Abstractions;
-using Domain.ValueObjects;
 using Humanizer;
+using JasperFx.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -16,6 +16,12 @@ public abstract class EntityTypeConfigurationBase<TEntity, TKey>
         BuildColumns(builder);
         BuildRelations(builder);
         BuildIndexes(builder);
+
+        string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")!;
+        if (environment.EqualsIgnoreCase("development"))
+        {
+            // builder.HasData(PopulateData());
+        }
     }
 
     public virtual void BuildColumns(EntityTypeBuilder<TEntity> builder)
@@ -33,6 +39,8 @@ public abstract class EntityTypeConfigurationBase<TEntity, TKey>
     public abstract void BuildRelations(EntityTypeBuilder<TEntity> builder);
 
     public abstract void BuildIndexes(EntityTypeBuilder<TEntity> builder);
+
+    public abstract IEnumerable<TEntity> PopulateData();
 
     public virtual void SetEntityName(EntityTypeBuilder<TEntity> builder)
     {

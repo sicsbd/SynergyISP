@@ -7,17 +7,20 @@ using SynergyISP.Domain.ValueObjects;
 /// The user aggregate.
 /// </summary>
 
-public interface IUserAggregate : IAggregate
+public interface IUserAggregate<TUser, TKey>
+    : IAggregate
+    where TUser : User<TKey>
+    where TKey : UserId
 {
     /// <summary>
     /// Gets the profile.
     /// </summary>
-    IUserProfileAggregate<User<UserId>, UserId> Profile { get; }
+    IUserProfileAggregate<TUser, TKey> Profile { get; }
 
     /// <summary>
     /// Changes the profile.
     /// </summary>
     /// <param name="profile">The profile.</param>
     /// <returns>An IUserAggregate.</returns>
-    public IUserAggregate ChangeProfile(IUserProfileAggregate<User<UserId>, UserId> profile);
+    public IUserAggregate<TUser, TKey> ChangeProfile(IUserProfileAggregate<TUser, TKey> profile);
 }

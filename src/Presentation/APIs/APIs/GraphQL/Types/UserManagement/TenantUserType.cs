@@ -1,18 +1,16 @@
 ﻿namespace SynergyISP.Presentation.APIs.GraphQL.Types.UserManagement;
 
-using System.Reflection;
 using Domain.Entities;
-using Domain.ValueObjects;
 using Marten;
+using SynergyISP.Presentation.APIs.GraphQL.Types.UserManagement.ScalarTypes;
 
 /// <inheritdoc />
-public class UserEntityType : ObjectType<User<UserId>>
+public class TenantUserType : ObjectType<TenantUser>
 {
     /// <inheritdoc />
-    protected override void Configure(IObjectTypeDescriptor<User<UserId>> descriptor)
+    protected override void Configure(IObjectTypeDescriptor<TenantUser> descriptor)
     {
         base.Configure(descriptor);
-        descriptor.Name("User");
         descriptor
             .Field(u => u.Id)
             .Name("id")
@@ -24,11 +22,7 @@ public class UserEntityType : ObjectType<User<UserId>>
         descriptor
             .Field(u => u.FirstName)
             .Name("firstName")
-            .Type<NonNullType<NameType>>()
-            .UseFiltering<string>(d =>
-            {
-                d.BindFields(BindingBehavior.Explicit);
-            });
+            .Type<NonNullType<NameType>>();
         descriptor
             .Field(u => u.LastName)
             .Name("lastName")
@@ -43,21 +37,21 @@ public class UserEntityType : ObjectType<User<UserId>>
             .Type<NameType>();
         descriptor
             .Field(u => u.Profile)
-            .Type<UserProfileType>()
+            .Type<CustomerProfileType>()
             .Resolve(async (ctx, ct) =>
             {
-                User<UserId> user = ctx.Parent<User<UserId>>();
+                TenantUser user = ctx.Parent<TenantUser>();
                 using IServiceScope scope = ctx.Services.CreateAsyncScope();
                 using IDocumentStore documentStore = scope.ServiceProvider.GetRequiredService<IDocumentStore>();
                 using IDocumentSession documentSession = documentStore.LightweightSession();
 
-                return await documentSession.Query<UserProfile>().SingleOrDefaultAsync(x => x.Id.Equals((Guid)user.Id), ct);
+                return await documentSession.Query<CustomerProfile>().SingleOrDefaultAsync(x => x.Id.Equals((Guid)user.Id), ct);
             });
         descriptor
             .Field("fullName")
             .Resolve(ctx =>
             {
-                User<UserId> user = ctx.Parent<User<UserId>>();
+                TenantUser user = ctx.Parent<TenantUser>();
                 return user.FirstName + user.LastName;
             });
     }

@@ -14,34 +14,28 @@ public record class UserProfileAggregate
     /// Initializes a new instance of the <see cref="UserProfileAggregate"/> class.
     /// </summary>
     /// <param name="firstName">The first name.</param>
-    public UserProfileAggregate(Name firstName)
+    public UserProfileAggregate()
     {
-        FirstName = firstName;
     }
 
-    /// <summary>
-    /// Gets or inits the first name.
-    /// </summary>
-    public Name FirstName { get; init; }
+    /// <inheritdoc/>
+    public string ProfileKey { get; private init; }
 
-    /// <summary>
-    /// Gets or inits the last name.
-    /// </summary>
-    public Name? LastName { get; init; }
+    /// <inheritdoc/>
+    public string DataType { get; private init; }
 
-    /// <summary>
-    /// Gets or inits the display name.
-    /// </summary>
-    public Name? DisplayName { get; init; }
+    /// <inheritdoc/>
+    public string Value { get; private init; }
 
-    /// <summary>
-    /// Gets or inits the nick name.
-    /// </summary>
-    public Name? NickName { get; init; }
-
+    /// <inheritdoc/>
     public IUserProfileAggregate<User<UserId>, UserId> ChangeProfile(UserId userId, string key, string value)
     {
-        throw new NotImplementedException();
+        return this with
+        {
+            ProfileKey = key,
+            DataType = null!,
+            Value = value,
+        };
     }
 
     /// <inheritdoc/>

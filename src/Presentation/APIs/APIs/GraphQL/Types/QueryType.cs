@@ -1,4 +1,6 @@
 ﻿namespace SynergyISP.Presentation.APIs.GraphQL.Types;
+
+using SynergyISP.Presentation.APIs.GraphQL.Types.UserManagement.InputTypes;
 using UserManagement;
 
 public class QueryType : ObjectType<Query>
@@ -8,12 +10,12 @@ public class QueryType : ObjectType<Query>
     {
         base.Configure(descriptor);
         descriptor
-            .Field(q => q.GetUsers(default!, default!, default!))
-            .Type<ListType<UserEntityType>>()
+            .Field(q => q.GetCustomers(default!, default!, default!))
+            .Type<ListType<CustomerType>>()
             .UsePaging()
-            //.UseProjection<UserEntityType>()
-            .UseFiltering<UserFilterInputType>()
-            .UseSorting<UserSortInputType>()
+            //.UseProjection()
+            .UseFiltering<CustomerFilterInputType>()
+            .UseSorting<CustomerSortInputType>()
             ;
     }
 }

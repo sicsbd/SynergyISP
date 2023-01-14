@@ -1,4 +1,3 @@
-using HotChocolate.Data.Filters;
 using Microsoft.EntityFrameworkCore;
 using SynergyISP.Application;
 using SynergyISP.Application.Common.Dtos;
@@ -8,6 +7,8 @@ using SynergyISP.Domain.ValueObjects;
 using SynergyISP.Infrastructure;
 using SynergyISP.Presentation.APIs.GraphQL.Types;
 using SynergyISP.Presentation.APIs.GraphQL.Types.UserManagement;
+using SynergyISP.Presentation.APIs.GraphQL.Types.UserManagement.InputTypes;
+using SynergyISP.Presentation.APIs.GraphQL.Types.UserManagement.ScalarTypes;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +31,7 @@ services
         //d.BindRuntimeType<UserId, FilterInputType<UserId>>();
         //d.BindRuntimeType<Name, FilterInputType<UserName>>();
         //d.BindRuntimeType<UserName, UserNameFilterInputType>();
-        d.BindRuntimeType<UserDto, UserFilterInputType>();
+        d.BindRuntimeType<CustomerDto, CustomerFilterInputType>();
     })
     .AddProjections()
     .AddSorting(d =>
@@ -38,7 +39,7 @@ services
         d.UseQueryableProvider();
         d.AddDefaultOperations();
         d.BindDefaultTypes();
-        d.BindRuntimeType<UserDto, UserSortInputType>();
+        d.BindRuntimeType<CustomerDto, CustomerSortInputType>();
     })
     .AddQueryableCursorPagingProvider()
     .AddDefaultTransactionScopeHandler()
@@ -47,13 +48,15 @@ services
     .AddQueryType<QueryType>()
     .AddMutationType<MutationType>()
     .AddSubscriptionType<SubscriptionType>()
-    .AddType<UserEntityType>()
-    .AddType<UserType>()
-    .AddType<UserProfileType>()
-    .AddType<UserEntityType>()
-    .AddType<CreateUserType>()
+    //.AddType<OrgUserType>()
+    //.AddType<TenantUserType>()
+    .AddType<CustomerType>()
+    .AddType<CustomerDtoType>()
+    .AddType<CustomerProfileType>()
+    //.AddType<UserEntityType>()
+    .AddType<CreateCustomerType>()
     .AddType<UserIdType>()
-    .AddType<SynergyISP.Presentation.APIs.GraphQL.Types.UserManagement.NameType>()
+    .AddType<SynergyISP.Presentation.APIs.GraphQL.Types.UserManagement.ScalarTypes.NameType>()
     .AddType<UserNameType>()
     //.BindRuntimeType<UserId, StringType>()
     //.AddTypeConverter<UserId, string>(x => x)
@@ -75,9 +78,15 @@ if (isDevelopment)
     IWriteDataContext ctx = app.Services.GetRequiredService<IWriteDataContext>();
     await ctx.Database.EnsureDeletedAsync();
     await ctx.Database.MigrateAsync();
-    IEnumerable<User<UserId>> initialUsers = SynergyInitialData.PopulateUsers();
-    ctx.Set<User<UserId>>().AddRange(initialUsers);
-    SynergyInitialData.InitialUsers = initialUsers;
+    IEnumerable<OrganizationUser> initialOrgUsers = SynergyInitialData.PopulateOrganizationUsers();
+    IEnumerable<TenantUser> initialTenantUsers = SynergyInitialData.PopulateTenantUsers();
+    IEnumerable<Customer> initialCustomers = SynergyInitialData.PopulateCustomers();
+    ctx.Set<OrganizationUser>().AddRange(initialOrgUsers);
+    ctx.Set<TenantUser>().AddRange(initialTenantUsers);
+    ctx.Set<Customer>().AddRange(initialCustomers);
+    SynergyInitialData.InitialOrgUsers = initialOrgUsers;
+    SynergyInitialData.InitialTenantUsers = initialTenantUsers;
+    SynergyInitialData.InitialCustomers = initialCustomers;
     ctx.SaveChanges();
 }
 

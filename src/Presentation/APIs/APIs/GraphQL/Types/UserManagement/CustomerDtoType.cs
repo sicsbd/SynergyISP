@@ -1,11 +1,12 @@
 ﻿namespace SynergyISP.Presentation.APIs.GraphQL.Types.UserManagement;
 using Application.Common.Dtos;
-using FluentValidation.Validators;
 
-public class UserType : ObjectType<UserDto>
+public class CustomerDtoType : ObjectType<CustomerDto>
 {
-    protected override void Configure(IObjectTypeDescriptor<UserDto> descriptor)
+    /// <inheritdoc/>
+    protected override void Configure(IObjectTypeDescriptor<CustomerDto> descriptor)
     {
+        base.Configure(descriptor);
         descriptor
             .Field(u => u.Id)
             .Ignore();
@@ -24,6 +25,5 @@ public class UserType : ObjectType<UserDto>
         descriptor
             .Field(u => u.NickName)
             .Type<StringType>();
-        base.Configure(descriptor);
     }
 }

@@ -1,9 +1,9 @@
 ﻿namespace SynergyISP.Presentation.APIs.GraphQL.Types.UserManagement;
 using Application.Common.Dtos;
-public class CreateUserType
-    : InputObjectType<CreateUserDto>
+public class CreateCustomerType
+    : InputObjectType<CreateCustomerDto>
 {
-    protected override void Configure(IInputObjectTypeDescriptor<CreateUserDto> descriptor)
+    protected override void Configure(IInputObjectTypeDescriptor<CreateCustomerDto> descriptor)
     {
         descriptor.Field(u => u.Id).Type<IdType>();
         descriptor

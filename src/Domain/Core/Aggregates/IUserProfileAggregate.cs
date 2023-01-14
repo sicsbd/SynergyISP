@@ -12,5 +12,8 @@ public interface IUserProfileAggregate<TUser, TKey>
     where TUser : User<TKey>
     where TKey : UserId
 {
-    public IUserProfileAggregate<TUser, TKey> ChangeProfile(UserId userId, string key, string value);
+    string ProfileKey { get; }
+    string DataType { get; }
+    string Value { get; }
+    public IUserProfileAggregate<TUser, TKey> ChangeProfile(TKey userId, string key, string value);
 }

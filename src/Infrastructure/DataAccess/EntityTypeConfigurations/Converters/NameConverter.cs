@@ -1,7 +1,7 @@
-﻿namespace SynergyISP.Infrastructure.DataAccess.EntityTypeConfigurations;
+﻿namespace SynergyISP.Infrastructure.DataAccess.EntityTypeConfigurations.Converters;
 using Domain.ValueObjects;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+
 internal class NameConverter : ValueConverter<Name, string>
 {
     /// <summary>
@@ -12,19 +12,6 @@ internal class NameConverter : ValueConverter<Name, string>
             v => v.Value,
             v => new Name(v),
             new ConverterMappingHints(500, unicode: true))
-    {
-    }
-}
-
-internal class NameComparer : ValueComparer<Name>
-{
-    /// <summary>
-    /// Initializes a new instance of the <see cref="NameComparer"/> class.
-    /// </summary>
-    public NameComparer()
-        : base(
-            (v1, v2) => v1!.Equals(v2),
-            v => v.GetHashCode())
     {
     }
 }

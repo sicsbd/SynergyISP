@@ -1,44 +1,26 @@
 ﻿namespace SynergyISP.Infrastructure.DataAccess.EntityTypeConfigurations;
 
+using Comparers;
+using Converters;
 using Domain.Entities;
 using Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.Extensions.Hosting;
 
-public class UserEntityTypeConfiguration : AuditableEntityEntityTypeConfigurationBase<User<UserId>, UserId>
+/// <summary>
+/// The user entity type configuration.
+/// </summary>
+/// <typeparam name="TUser">TheUser entity type.</param>
+/// <typeparam name="TKey">The User Key type.</typeparam>
+public abstract class UserEntityTypeConfiguration<TUser, TKey>
+    : AuditableEntityEntityTypeConfigurationBase<TUser, TKey>
+    where TUser : User<TKey>
+    where TKey : UserId
 {
-    private readonly IHostEnvironment _hostEnvironment;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="UserEntityTypeConfiguration"/> class.
-    /// </summary>
-    /// <param name="hostEnvironment">The host environment.</param>
-    //public UserEntityEtypeConfiguration(IHostEnvironment hostEnvironment)
-    //{
-    //    _hostEnvironment = hostEnvironment;
-    //}
-
-    public override void Configure(EntityTypeBuilder<User<UserId>> builder)
-    {
-        base.Configure(builder);
-        //if (_hostEnvironment.IsDevelopment())
-        //{
-        //    builder.HasData(SynergyInitialData.GetUsers());
-        //}
-    }
-
     /// <inheritdoc/>
-    public override void BuildColumns(EntityTypeBuilder<User<UserId>> builder)
+    public override void BuildColumns(EntityTypeBuilder<TUser> builder)
     {
         base.BuildColumns(builder);
-        builder
-            .Property(e => e.Id)
-            .HasConversion(
-                v => Guid.Parse(v.ToString()),
-                v => new UserId(v))
-            .HasColumnType("uuid")
-            .HasDefaultValueSql("uuid_generate_v4()");
         builder
             .Property(e => e.UserName)
             .HasConversion(new UserNameConverter(), new UserNameComparer())
@@ -93,13 +75,13 @@ public class UserEntityTypeConfiguration : AuditableEntityEntityTypeConfiguratio
     }
 
     /// <inheritdoc/>
-    public override void BuildIndexes(EntityTypeBuilder<User<UserId>> builder)
+    public override void BuildIndexes(EntityTypeBuilder<TUser> builder)
     {
         builder.HasIndex(e => e.UserName).IsUnique();
     }
 
     /// <inheritdoc/>
-    public override void BuildRelations(EntityTypeBuilder<User<UserId>> builder)
+    public override void BuildRelations(EntityTypeBuilder<TUser> builder)
     {
     }
 }

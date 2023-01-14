@@ -92,6 +92,12 @@ public abstract record class AuditableEntity<TKey>
         _httpContextAccessor = serviceProvider.GetRequiredService<IHttpContextAccessor>();
     }
 
+    /// <inheritdoc />
+    public virtual Task ResolveDependenciesAsync(IServiceProvider serviceProvider)
+    {
+        return Task.CompletedTask;
+    }
+
     /// <summary>
     /// Gets the current user name.
     /// </summary>
@@ -99,5 +105,11 @@ public abstract record class AuditableEntity<TKey>
     private string? GetCurrentUserName()
     {
         return _httpContextAccessor?.HttpContext.User.Identity?.Name;
+    }
+
+    /// <inheritdoc />
+    public virtual AuditableEntity<TKey> ToEntity()
+    {
+        return this;
     }
 }

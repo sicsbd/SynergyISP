@@ -29,8 +29,4 @@
       <ProjectReference Include="..\Kernel\Kernel.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Common\Dtos\" />
-    </ItemGroup>
-
 </Project>

@@ -1,7 +1,5 @@
-﻿namespace SynergyISP.Presentation.APIs.GraphQL.Types.UserManagement;
+﻿namespace SynergyISP.Presentation.APIs.GraphQL.Types.UserManagement.ScalarTypes;
 using Domain.ValueObjects;
-using HotChocolate.Data.Filters;
-using HotChocolate.Data.Sorting;
 using HotChocolate.Language;
 
 /// <summary>
@@ -34,12 +32,12 @@ public sealed class UserNameType : ScalarType<UserName, StringValueNode>, IInput
     // define how a value node is parsed to the string .NET type
     /// <inheritdoc/>
     protected override UserName ParseLiteral(StringValueNode valueSyntax)
-        => new (valueSyntax.Value);
+        => new(valueSyntax.Value);
 
     // define how the string .NET type is parsed to a value node
     /// <inheritdoc/>
     protected override StringValueNode ParseValue(UserName runtimeValue)
-        => new (runtimeValue.Value);
+        => new(runtimeValue.Value);
 
     /// <inheritdoc/>
     public override bool TryDeserialize(

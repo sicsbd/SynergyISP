@@ -1,18 +1,22 @@
 ﻿namespace SynergyISP.Domain.Entities;
 
 using Abstractions;
-using SynergyISP.Domain.Aggregates;
+using Aggregates;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using ValueObjects;
 
-public record class User<TKey>
-    : AuditableEntity<TKey>, IUserAggregateRoot, IUserAggregate
+public abstract record class User<TKey>
+    : AuditableEntity<TKey>, IUserAggregateRoot<User<TKey>, TKey>, IUserAggregate<User<TKey>, TKey>
     where TKey : UserId
 {
+    private IMediator? _mediator;
+
     /// <summary>
-    /// Initializes a new instance of the <see cref="User"/> class.
+    /// Initializes a new instance of the <see cref="User{TKey}}"/> class.
     /// </summary>
-    public User()
-        : base((TKey)Guid.Empty)
+    protected User()
+        : base((TKey)null!)
     {
     }
 
@@ -26,73 +30,87 @@ public record class User<TKey>
     }
 
     /// <inheritdoc />
-    public new TKey Id { get; private init; }
+    public new TKey Id { get; protected init; } = null!;
 
     /// <summary>
     /// Gets a value for user name.
     /// </summary>
-    public UserName UserName { get; private init; } = string.Empty;
+    public UserName UserName { get; protected init; } = string.Empty;
 
     /// <summary>
     /// Gets a value for first name.
     /// </summary>
-    public Name FirstName { get; private init; } = string.Empty;
+    public Name FirstName { get; protected init; } = string.Empty;
 
     /// <summary>
     /// Gets a value for last name.
     /// </summary>
-    public Name? LastName { get; private init; } = string.Empty;
+    public Name? LastName { get; protected init; } = string.Empty;
 
     /// <summary>
     /// Gets a value for display name.
     /// </summary>
-    public Name? DisplayName { get; private init; } = string.Empty;
+    public Name? DisplayName { get; protected init; } = string.Empty;
 
     /// <summary>
     /// Gets a value for nick name.
     /// </summary>
-    public Name? NickName { get; private init; } = string.Empty;
+    public Name? NickName { get; protected init; } = string.Empty;
 
     /// <summary>
     /// Gets the password.
     /// </summary>
-    public Password Password { get; private init; }
+    public Password Password { get; protected init; } = string.Empty;
 
     /// <inheritdoc/>
-    public IUserProfileAggregate<User<UserId>, UserId> Profile { get; private init; }
+    public virtual IUserProfileAggregate<User<TKey>, TKey>? Profile { get; protected init; }
 
     /// <inheritdoc/>
-    public IUserAggregateRoot ChangeAccount(
+    public virtual IUserAggregateRoot<User<TKey>, TKey> ChangeAccount(
+        TKey? id,
         UserName? userName,
-        Name firstName,
+        Name? firstName,
         Name? lastName,
         Name? displayName,
         Name? nickName,
         Password? password,
-        UserId? id,
-        IUserProfileAggregate<User<UserId>, UserId>? profile)
+        IUserProfileAggregate<User<TKey>, TKey>? profile)
     {
         return this with
         {
-            Id = (TKey)(id ?? throw new ArgumentNullException(nameof(id))),
+            Id = id ?? throw new ArgumentNullException(nameof(id)),
             UserName = userName ?? throw new InvalidOperationException("User name can not be null"),
             Password = password ?? throw new InvalidOperationException("Password can not be null"),
-            FirstName = firstName,
+            FirstName = firstName ?? throw new InvalidOperationException("First name can not be null"),
             LastName = lastName,
             DisplayName = displayName,
             NickName = nickName,
+            Profile = profile,
         };
     }
 
     /// <inheritdoc/>
-    public IUserAggregateRoot ChangePassword(Password password)
+    public virtual IUserAggregateRoot<User<TKey>, TKey> ChangePassword(Password password)
     {
         return this with { Password = password };
     }
 
     /// <inheritdoc/>
-    public IUserAggregate ChangeProfile(IUserProfileAggregate<User<UserId>, UserId> profile)
+    public virtual IUserAggregate<User<TKey>, TKey> ChangeProfile(IUserProfileAggregate<User<TKey>, TKey> profile)
     {
-        return this;
+        return this with
+        {
+            Profile = profile
+        };
     }
+
+    /// <inheritdoc/>
+    public override void ResolveDependencies(IServiceProvider serviceProvider)
+    {
+        base.ResolveDependencies(serviceProvider);
+        _mediator = serviceProvider.GetRequiredService<IMediator>();
+    }
+
+    /// <inheritdoc />
+    public abstract Task<IUserAggregateRoot<User<TKey>, TKey>> CreateAsync();
 }

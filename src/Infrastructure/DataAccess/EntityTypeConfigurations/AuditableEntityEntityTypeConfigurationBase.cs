@@ -1,7 +1,6 @@
 ﻿namespace SynergyISP.Infrastructure.DataAccess.EntityTypeConfigurations;
 using SynergyISP.Domain.Abstractions;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore;
 
 public abstract class AuditableEntityEntityTypeConfigurationBase<TEntity, TKey>
     : EntityTypeConfigurationBase<TEntity, TKey>

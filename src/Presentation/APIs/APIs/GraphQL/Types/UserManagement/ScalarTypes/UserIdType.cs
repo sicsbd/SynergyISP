@@ -1,18 +1,18 @@
-﻿namespace SynergyISP.Presentation.APIs.GraphQL.Types.UserManagement;
+﻿namespace SynergyISP.Presentation.APIs.GraphQL.Types.UserManagement.ScalarTypes;
 using Domain.ValueObjects;
 using HotChocolate.Language;
 
 /// <summary>
 /// The name type.
 /// </summary>
-public sealed class NameType : ScalarType<Name, StringValueNode>, IInputType, IOutputType
+public sealed class UserIdType : ScalarType<UserId, StringValueNode>, IInputType, IOutputType
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="NameType"/> class.
+    /// Initializes a new instance of the <see cref="UserIdType"/> class.
     /// </summary>
     /// <param name="validator">The validator.</param>
-    public NameType()
-        : base("Name", BindingBehavior.Implicit)
+    public UserIdType()
+        : base("UserId", BindingBehavior.Implicit)
     {
         Description = "Represents a name";
     }
@@ -26,18 +26,18 @@ public sealed class NameType : ScalarType<Name, StringValueNode>, IInputType, IO
         => IsInstanceOfType(valueSyntax.Value);
 
     // is another string .NET type an instance of this scalar
-    protected override bool IsInstanceOfType(Name runtimeValue)
-        => runtimeValue.GetType().Equals(typeof(Name));
+    protected override bool IsInstanceOfType(UserId runtimeValue)
+        => runtimeValue.GetType().Equals(typeof(UserId));
 
     // define how a value node is parsed to the string .NET type
     /// <inheritdoc/>
-    protected override Name ParseLiteral(StringValueNode valueSyntax)
-        => new (valueSyntax.Value);
+    protected override UserId ParseLiteral(StringValueNode valueSyntax)
+        => new(Guid.Parse(valueSyntax.Value));
 
     // define how the string .NET type is parsed to a value node
     /// <inheritdoc/>
-    protected override StringValueNode ParseValue(Name runtimeValue)
-        => new (runtimeValue.Value);
+    protected override StringValueNode ParseValue(UserId runtimeValue)
+        => new(runtimeValue.Value.ToString());
 
     /// <inheritdoc/>
     public override bool TryDeserialize(
@@ -46,9 +46,9 @@ public sealed class NameType : ScalarType<Name, StringValueNode>, IInputType, IO
     {
         runtimeValue = null;
 
-        if (resultValue is string s)
+        if (resultValue is string s && Guid.TryParse(s, out var id))
         {
-            runtimeValue = s;
+            runtimeValue = id;
             return true;
         }
 
@@ -62,9 +62,9 @@ public sealed class NameType : ScalarType<Name, StringValueNode>, IInputType, IO
     {
         resultValue = null;
 
-        if (runtimeValue is Name name)
+        if (runtimeValue is UserId id)
         {
-            resultValue = name.Value;
+            resultValue = id.Value;
             return true;
         }
 

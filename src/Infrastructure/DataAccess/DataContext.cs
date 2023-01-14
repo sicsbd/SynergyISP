@@ -1,10 +1,8 @@
 ﻿namespace SynergyISP.Infrastructure.DataAccess;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Hosting;
 using SynergyISP.Domain.Abstractions;
 using SynergyISP.Domain.ValueObjects;
-using SynergyISP.Infrastructure.DataAccess.EntityTypeConfigurations;
 
 /// <summary>
 /// The data context.

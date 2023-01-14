@@ -14,14 +14,14 @@ using Weasel.Postgresql;
 namespace Marten.Generated.DocumentStorage
 {
     // START: UpsertUserProfileOperation791280756
-    public class UpsertUserProfileOperation791280756 : Marten.Internal.Operations.StorageOperation<SynergyISP.Domain.Entities.UserProfile, System.Guid>
+    public class UpsertUserProfileOperation791280756 : Marten.Internal.Operations.StorageOperation<SynergyISP.Domain.Entities.CustomerProfile, System.Guid>
     {
-        private readonly SynergyISP.Domain.Entities.UserProfile _document;
+        private readonly SynergyISP.Domain.Entities.CustomerProfile _document;
         private readonly System.Guid _id;
         private readonly System.Collections.Generic.Dictionary<System.Guid, System.Guid> _versions;
         private readonly Marten.Schema.DocumentMapping _mapping;
 
-        public UpsertUserProfileOperation791280756(SynergyISP.Domain.Entities.UserProfile document, System.Guid id, System.Collections.Generic.Dictionary<System.Guid, System.Guid> versions, Marten.Schema.DocumentMapping mapping) : base(document, id, versions, mapping)
+        public UpsertUserProfileOperation791280756(SynergyISP.Domain.Entities.CustomerProfile document, System.Guid id, System.Collections.Generic.Dictionary<System.Guid, System.Guid> versions, Marten.Schema.DocumentMapping mapping) : base(document, id, versions, mapping)
         {
             _document = document;
             _id = id;
@@ -65,7 +65,7 @@ namespace Marten.Generated.DocumentStorage
         }
 
 
-        public override void ConfigureParameters(Npgsql.NpgsqlParameter[] parameters, SynergyISP.Domain.Entities.UserProfile document, Marten.Internal.IMartenSession session)
+        public override void ConfigureParameters(Npgsql.NpgsqlParameter[] parameters, SynergyISP.Domain.Entities.CustomerProfile document, Marten.Internal.IMartenSession session)
         {
             parameters[0].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Jsonb;
             parameters[0].Value = session.Serializer.ToJson(_document);
@@ -83,14 +83,14 @@ namespace Marten.Generated.DocumentStorage
     
     
     // START: InsertUserProfileOperation791280756
-    public class InsertUserProfileOperation791280756 : Marten.Internal.Operations.StorageOperation<SynergyISP.Domain.Entities.UserProfile, System.Guid>
+    public class InsertUserProfileOperation791280756 : Marten.Internal.Operations.StorageOperation<SynergyISP.Domain.Entities.CustomerProfile, System.Guid>
     {
-        private readonly SynergyISP.Domain.Entities.UserProfile _document;
+        private readonly SynergyISP.Domain.Entities.CustomerProfile _document;
         private readonly System.Guid _id;
         private readonly System.Collections.Generic.Dictionary<System.Guid, System.Guid> _versions;
         private readonly Marten.Schema.DocumentMapping _mapping;
 
-        public InsertUserProfileOperation791280756(SynergyISP.Domain.Entities.UserProfile document, System.Guid id, System.Collections.Generic.Dictionary<System.Guid, System.Guid> versions, Marten.Schema.DocumentMapping mapping) : base(document, id, versions, mapping)
+        public InsertUserProfileOperation791280756(SynergyISP.Domain.Entities.CustomerProfile document, System.Guid id, System.Collections.Generic.Dictionary<System.Guid, System.Guid> versions, Marten.Schema.DocumentMapping mapping) : base(document, id, versions, mapping)
         {
             _document = document;
             _id = id;
@@ -134,7 +134,7 @@ namespace Marten.Generated.DocumentStorage
         }
 
 
-        public override void ConfigureParameters(Npgsql.NpgsqlParameter[] parameters, SynergyISP.Domain.Entities.UserProfile document, Marten.Internal.IMartenSession session)
+        public override void ConfigureParameters(Npgsql.NpgsqlParameter[] parameters, SynergyISP.Domain.Entities.CustomerProfile document, Marten.Internal.IMartenSession session)
         {
             parameters[0].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Jsonb;
             parameters[0].Value = session.Serializer.ToJson(_document);
@@ -152,14 +152,14 @@ namespace Marten.Generated.DocumentStorage
     
     
     // START: UpdateUserProfileOperation791280756
-    public class UpdateUserProfileOperation791280756 : Marten.Internal.Operations.StorageOperation<SynergyISP.Domain.Entities.UserProfile, System.Guid>
+    public class UpdateUserProfileOperation791280756 : Marten.Internal.Operations.StorageOperation<SynergyISP.Domain.Entities.CustomerProfile, System.Guid>
     {
-        private readonly SynergyISP.Domain.Entities.UserProfile _document;
+        private readonly SynergyISP.Domain.Entities.CustomerProfile _document;
         private readonly System.Guid _id;
         private readonly System.Collections.Generic.Dictionary<System.Guid, System.Guid> _versions;
         private readonly Marten.Schema.DocumentMapping _mapping;
 
-        public UpdateUserProfileOperation791280756(SynergyISP.Domain.Entities.UserProfile document, System.Guid id, System.Collections.Generic.Dictionary<System.Guid, System.Guid> versions, Marten.Schema.DocumentMapping mapping) : base(document, id, versions, mapping)
+        public UpdateUserProfileOperation791280756(SynergyISP.Domain.Entities.CustomerProfile document, System.Guid id, System.Collections.Generic.Dictionary<System.Guid, System.Guid> versions, Marten.Schema.DocumentMapping mapping) : base(document, id, versions, mapping)
         {
             _document = document;
             _id = id;
@@ -203,7 +203,7 @@ namespace Marten.Generated.DocumentStorage
         }
 
 
-        public override void ConfigureParameters(Npgsql.NpgsqlParameter[] parameters, SynergyISP.Domain.Entities.UserProfile document, Marten.Internal.IMartenSession session)
+        public override void ConfigureParameters(Npgsql.NpgsqlParameter[] parameters, SynergyISP.Domain.Entities.CustomerProfile document, Marten.Internal.IMartenSession session)
         {
             parameters[0].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Jsonb;
             parameters[0].Value = session.Serializer.ToJson(_document);
@@ -221,7 +221,7 @@ namespace Marten.Generated.DocumentStorage
     
     
     // START: QueryOnlyUserProfileSelector791280756
-    public class QueryOnlyUserProfileSelector791280756 : Marten.Internal.CodeGeneration.DocumentSelectorWithOnlySerializer, Marten.Linq.Selectors.ISelector<SynergyISP.Domain.Entities.UserProfile>
+    public class QueryOnlyUserProfileSelector791280756 : Marten.Internal.CodeGeneration.DocumentSelectorWithOnlySerializer, Marten.Linq.Selectors.ISelector<SynergyISP.Domain.Entities.CustomerProfile>
     {
         private readonly Marten.Internal.IMartenSession _session;
         private readonly Marten.Schema.DocumentMapping _mapping;
@@ -234,20 +234,20 @@ namespace Marten.Generated.DocumentStorage
 
 
 
-        public SynergyISP.Domain.Entities.UserProfile Resolve(System.Data.Common.DbDataReader reader)
+        public SynergyISP.Domain.Entities.CustomerProfile Resolve(System.Data.Common.DbDataReader reader)
         {
 
-            SynergyISP.Domain.Entities.UserProfile document;
-            document = _serializer.FromJson<SynergyISP.Domain.Entities.UserProfile>(reader, 0);
+            SynergyISP.Domain.Entities.CustomerProfile document;
+            document = _serializer.FromJson<SynergyISP.Domain.Entities.CustomerProfile>(reader, 0);
             return document;
         }
 
 
-        public async System.Threading.Tasks.Task<SynergyISP.Domain.Entities.UserProfile> ResolveAsync(System.Data.Common.DbDataReader reader, System.Threading.CancellationToken token)
+        public async System.Threading.Tasks.Task<SynergyISP.Domain.Entities.CustomerProfile> ResolveAsync(System.Data.Common.DbDataReader reader, System.Threading.CancellationToken token)
         {
 
-            SynergyISP.Domain.Entities.UserProfile document;
-            document = await _serializer.FromJsonAsync<SynergyISP.Domain.Entities.UserProfile>(reader, 0, token).ConfigureAwait(false);
+            SynergyISP.Domain.Entities.CustomerProfile document;
+            document = await _serializer.FromJsonAsync<SynergyISP.Domain.Entities.CustomerProfile>(reader, 0, token).ConfigureAwait(false);
             return document;
         }
 
@@ -257,7 +257,7 @@ namespace Marten.Generated.DocumentStorage
     
     
     // START: LightweightUserProfileSelector791280756
-    public class LightweightUserProfileSelector791280756 : Marten.Internal.CodeGeneration.DocumentSelectorWithVersions<SynergyISP.Domain.Entities.UserProfile, System.Guid>, Marten.Linq.Selectors.ISelector<SynergyISP.Domain.Entities.UserProfile>
+    public class LightweightUserProfileSelector791280756 : Marten.Internal.CodeGeneration.DocumentSelectorWithVersions<SynergyISP.Domain.Entities.CustomerProfile, System.Guid>, Marten.Linq.Selectors.ISelector<SynergyISP.Domain.Entities.CustomerProfile>
     {
         private readonly Marten.Internal.IMartenSession _session;
         private readonly Marten.Schema.DocumentMapping _mapping;
@@ -270,23 +270,23 @@ namespace Marten.Generated.DocumentStorage
 
 
 
-        public SynergyISP.Domain.Entities.UserProfile Resolve(System.Data.Common.DbDataReader reader)
+        public SynergyISP.Domain.Entities.CustomerProfile Resolve(System.Data.Common.DbDataReader reader)
         {
             var id = reader.GetFieldValue<System.Guid>(0);
 
-            SynergyISP.Domain.Entities.UserProfile document;
-            document = _serializer.FromJson<SynergyISP.Domain.Entities.UserProfile>(reader, 1);
+            SynergyISP.Domain.Entities.CustomerProfile document;
+            document = _serializer.FromJson<SynergyISP.Domain.Entities.CustomerProfile>(reader, 1);
             _session.MarkAsDocumentLoaded(id, document);
             return document;
         }
 
 
-        public async System.Threading.Tasks.Task<SynergyISP.Domain.Entities.UserProfile> ResolveAsync(System.Data.Common.DbDataReader reader, System.Threading.CancellationToken token)
+        public async System.Threading.Tasks.Task<SynergyISP.Domain.Entities.CustomerProfile> ResolveAsync(System.Data.Common.DbDataReader reader, System.Threading.CancellationToken token)
         {
             var id = await reader.GetFieldValueAsync<System.Guid>(0, token);
 
-            SynergyISP.Domain.Entities.UserProfile document;
-            document = await _serializer.FromJsonAsync<SynergyISP.Domain.Entities.UserProfile>(reader, 1, token).ConfigureAwait(false);
+            SynergyISP.Domain.Entities.CustomerProfile document;
+            document = await _serializer.FromJsonAsync<SynergyISP.Domain.Entities.CustomerProfile>(reader, 1, token).ConfigureAwait(false);
             _session.MarkAsDocumentLoaded(id, document);
             return document;
         }
@@ -297,7 +297,7 @@ namespace Marten.Generated.DocumentStorage
     
     
     // START: IdentityMapUserProfileSelector791280756
-    public class IdentityMapUserProfileSelector791280756 : Marten.Internal.CodeGeneration.DocumentSelectorWithIdentityMap<SynergyISP.Domain.Entities.UserProfile, System.Guid>, Marten.Linq.Selectors.ISelector<SynergyISP.Domain.Entities.UserProfile>
+    public class IdentityMapUserProfileSelector791280756 : Marten.Internal.CodeGeneration.DocumentSelectorWithIdentityMap<SynergyISP.Domain.Entities.CustomerProfile, System.Guid>, Marten.Linq.Selectors.ISelector<SynergyISP.Domain.Entities.CustomerProfile>
     {
         private readonly Marten.Internal.IMartenSession _session;
         private readonly Marten.Schema.DocumentMapping _mapping;
@@ -310,26 +310,26 @@ namespace Marten.Generated.DocumentStorage
 
 
 
-        public SynergyISP.Domain.Entities.UserProfile Resolve(System.Data.Common.DbDataReader reader)
+        public SynergyISP.Domain.Entities.CustomerProfile Resolve(System.Data.Common.DbDataReader reader)
         {
             var id = reader.GetFieldValue<System.Guid>(0);
             if (_identityMap.TryGetValue(id, out var existing)) return existing;
 
-            SynergyISP.Domain.Entities.UserProfile document;
-            document = _serializer.FromJson<SynergyISP.Domain.Entities.UserProfile>(reader, 1);
+            SynergyISP.Domain.Entities.CustomerProfile document;
+            document = _serializer.FromJson<SynergyISP.Domain.Entities.CustomerProfile>(reader, 1);
             _session.MarkAsDocumentLoaded(id, document);
             _identityMap[id] = document;
             return document;
         }
 
 
-        public async System.Threading.Tasks.Task<SynergyISP.Domain.Entities.UserProfile> ResolveAsync(System.Data.Common.DbDataReader reader, System.Threading.CancellationToken token)
+        public async System.Threading.Tasks.Task<SynergyISP.Domain.Entities.CustomerProfile> ResolveAsync(System.Data.Common.DbDataReader reader, System.Threading.CancellationToken token)
         {
             var id = await reader.GetFieldValueAsync<System.Guid>(0, token);
             if (_identityMap.TryGetValue(id, out var existing)) return existing;
 
-            SynergyISP.Domain.Entities.UserProfile document;
-            document = await _serializer.FromJsonAsync<SynergyISP.Domain.Entities.UserProfile>(reader, 1, token).ConfigureAwait(false);
+            SynergyISP.Domain.Entities.CustomerProfile document;
+            document = await _serializer.FromJsonAsync<SynergyISP.Domain.Entities.CustomerProfile>(reader, 1, token).ConfigureAwait(false);
             _session.MarkAsDocumentLoaded(id, document);
             _identityMap[id] = document;
             return document;
@@ -341,7 +341,7 @@ namespace Marten.Generated.DocumentStorage
     
     
     // START: DirtyTrackingUserProfileSelector791280756
-    public class DirtyTrackingUserProfileSelector791280756 : Marten.Internal.CodeGeneration.DocumentSelectorWithDirtyChecking<SynergyISP.Domain.Entities.UserProfile, System.Guid>, Marten.Linq.Selectors.ISelector<SynergyISP.Domain.Entities.UserProfile>
+    public class DirtyTrackingUserProfileSelector791280756 : Marten.Internal.CodeGeneration.DocumentSelectorWithDirtyChecking<SynergyISP.Domain.Entities.CustomerProfile, System.Guid>, Marten.Linq.Selectors.ISelector<SynergyISP.Domain.Entities.CustomerProfile>
     {
         private readonly Marten.Internal.IMartenSession _session;
         private readonly Marten.Schema.DocumentMapping _mapping;
@@ -354,13 +354,13 @@ namespace Marten.Generated.DocumentStorage
 
 
 
-        public SynergyISP.Domain.Entities.UserProfile Resolve(System.Data.Common.DbDataReader reader)
+        public SynergyISP.Domain.Entities.CustomerProfile Resolve(System.Data.Common.DbDataReader reader)
         {
             var id = reader.GetFieldValue<System.Guid>(0);
             if (_identityMap.TryGetValue(id, out var existing)) return existing;
 
-            SynergyISP.Domain.Entities.UserProfile document;
-            document = _serializer.FromJson<SynergyISP.Domain.Entities.UserProfile>(reader, 1);
+            SynergyISP.Domain.Entities.CustomerProfile document;
+            document = _serializer.FromJson<SynergyISP.Domain.Entities.CustomerProfile>(reader, 1);
             _session.MarkAsDocumentLoaded(id, document);
             _identityMap[id] = document;
             StoreTracker(_session, document);
@@ -368,13 +368,13 @@ namespace Marten.Generated.DocumentStorage
         }
 
 
-        public async System.Threading.Tasks.Task<SynergyISP.Domain.Entities.UserProfile> ResolveAsync(System.Data.Common.DbDataReader reader, System.Threading.CancellationToken token)
+        public async System.Threading.Tasks.Task<SynergyISP.Domain.Entities.CustomerProfile> ResolveAsync(System.Data.Common.DbDataReader reader, System.Threading.CancellationToken token)
         {
             var id = await reader.GetFieldValueAsync<System.Guid>(0, token);
             if (_identityMap.TryGetValue(id, out var existing)) return existing;
 
-            SynergyISP.Domain.Entities.UserProfile document;
-            document = await _serializer.FromJsonAsync<SynergyISP.Domain.Entities.UserProfile>(reader, 1, token).ConfigureAwait(false);
+            SynergyISP.Domain.Entities.CustomerProfile document;
+            document = await _serializer.FromJsonAsync<SynergyISP.Domain.Entities.CustomerProfile>(reader, 1, token).ConfigureAwait(false);
             _session.MarkAsDocumentLoaded(id, document);
             _identityMap[id] = document;
             StoreTracker(_session, document);
@@ -387,7 +387,7 @@ namespace Marten.Generated.DocumentStorage
     
     
     // START: QueryOnlyUserProfileDocumentStorage791280756
-    public class QueryOnlyUserProfileDocumentStorage791280756 : Marten.Internal.Storage.QueryOnlyDocumentStorage<SynergyISP.Domain.Entities.UserProfile, System.Guid>
+    public class QueryOnlyUserProfileDocumentStorage791280756 : Marten.Internal.Storage.QueryOnlyDocumentStorage<SynergyISP.Domain.Entities.CustomerProfile, System.Guid>
     {
         private readonly Marten.Schema.DocumentMapping _document;
 
@@ -398,59 +398,59 @@ namespace Marten.Generated.DocumentStorage
 
 
 
-        public override System.Guid AssignIdentity(SynergyISP.Domain.Entities.UserProfile document, string tenantId, Marten.Storage.IMartenDatabase database)
+        public override System.Guid AssignIdentity(SynergyISP.Domain.Entities.CustomerProfile document, string tenantId, Marten.Storage.IMartenDatabase database)
         {
             if (document.Id == Guid.Empty) _setter(document, Marten.Schema.Identity.CombGuidIdGeneration.NewGuid());
             return document.Id;
         }
 
 
-        public override Marten.Internal.Operations.IStorageOperation Update(SynergyISP.Domain.Entities.UserProfile document, Marten.Internal.IMartenSession session, string tenant)
+        public override Marten.Internal.Operations.IStorageOperation Update(SynergyISP.Domain.Entities.CustomerProfile document, Marten.Internal.IMartenSession session, string tenant)
         {
 
             return new Marten.Generated.DocumentStorage.UpdateUserProfileOperation791280756
             (
                 document, Identity(document),
-                session.Versions.ForType<SynergyISP.Domain.Entities.UserProfile, System.Guid>(),
+                session.Versions.ForType<SynergyISP.Domain.Entities.CustomerProfile, System.Guid>(),
                 _document
                 
             );
         }
 
 
-        public override Marten.Internal.Operations.IStorageOperation Insert(SynergyISP.Domain.Entities.UserProfile document, Marten.Internal.IMartenSession session, string tenant)
+        public override Marten.Internal.Operations.IStorageOperation Insert(SynergyISP.Domain.Entities.CustomerProfile document, Marten.Internal.IMartenSession session, string tenant)
         {
 
             return new Marten.Generated.DocumentStorage.InsertUserProfileOperation791280756
             (
                 document, Identity(document),
-                session.Versions.ForType<SynergyISP.Domain.Entities.UserProfile, System.Guid>(),
+                session.Versions.ForType<SynergyISP.Domain.Entities.CustomerProfile, System.Guid>(),
                 _document
                 
             );
         }
 
 
-        public override Marten.Internal.Operations.IStorageOperation Upsert(SynergyISP.Domain.Entities.UserProfile document, Marten.Internal.IMartenSession session, string tenant)
+        public override Marten.Internal.Operations.IStorageOperation Upsert(SynergyISP.Domain.Entities.CustomerProfile document, Marten.Internal.IMartenSession session, string tenant)
         {
 
             return new Marten.Generated.DocumentStorage.UpsertUserProfileOperation791280756
             (
                 document, Identity(document),
-                session.Versions.ForType<SynergyISP.Domain.Entities.UserProfile, System.Guid>(),
+                session.Versions.ForType<SynergyISP.Domain.Entities.CustomerProfile, System.Guid>(),
                 _document
                 
             );
         }
 
 
-        public override Marten.Internal.Operations.IStorageOperation Overwrite(SynergyISP.Domain.Entities.UserProfile document, Marten.Internal.IMartenSession session, string tenant)
+        public override Marten.Internal.Operations.IStorageOperation Overwrite(SynergyISP.Domain.Entities.CustomerProfile document, Marten.Internal.IMartenSession session, string tenant)
         {
             throw new System.NotSupportedException();
         }
 
 
-        public override System.Guid Identity(SynergyISP.Domain.Entities.UserProfile document)
+        public override System.Guid Identity(SynergyISP.Domain.Entities.CustomerProfile document)
         {
             return document.Id;
         }
@@ -479,7 +479,7 @@ namespace Marten.Generated.DocumentStorage
     
     
     // START: LightweightUserProfileDocumentStorage791280756
-    public class LightweightUserProfileDocumentStorage791280756 : Marten.Internal.Storage.LightweightDocumentStorage<SynergyISP.Domain.Entities.UserProfile, System.Guid>
+    public class LightweightUserProfileDocumentStorage791280756 : Marten.Internal.Storage.LightweightDocumentStorage<SynergyISP.Domain.Entities.CustomerProfile, System.Guid>
     {
         private readonly Marten.Schema.DocumentMapping _document;
 
@@ -490,59 +490,59 @@ namespace Marten.Generated.DocumentStorage
 
 
 
-        public override System.Guid AssignIdentity(SynergyISP.Domain.Entities.UserProfile document, string tenantId, Marten.Storage.IMartenDatabase database)
+        public override System.Guid AssignIdentity(SynergyISP.Domain.Entities.CustomerProfile document, string tenantId, Marten.Storage.IMartenDatabase database)
         {
             if (document.Id == Guid.Empty) _setter(document, Marten.Schema.Identity.CombGuidIdGeneration.NewGuid());
             return document.Id;
         }
 
 
-        public override Marten.Internal.Operations.IStorageOperation Update(SynergyISP.Domain.Entities.UserProfile document, Marten.Internal.IMartenSession session, string tenant)
+        public override Marten.Internal.Operations.IStorageOperation Update(SynergyISP.Domain.Entities.CustomerProfile document, Marten.Internal.IMartenSession session, string tenant)
         {
 
             return new Marten.Generated.DocumentStorage.UpdateUserProfileOperation791280756
             (
                 document, Identity(document),
-                session.Versions.ForType<SynergyISP.Domain.Entities.UserProfile, System.Guid>(),
+                session.Versions.ForType<SynergyISP.Domain.Entities.CustomerProfile, System.Guid>(),
                 _document
                 
             );
         }
 
 
-        public override Marten.Internal.Operations.IStorageOperation Insert(SynergyISP.Domain.Entities.UserProfile document, Marten.Internal.IMartenSession session, string tenant)
+        public override Marten.Internal.Operations.IStorageOperation Insert(SynergyISP.Domain.Entities.CustomerProfile document, Marten.Internal.IMartenSession session, string tenant)
         {
 
             return new Marten.Generated.DocumentStorage.InsertUserProfileOperation791280756
             (
                 document, Identity(document),
-                session.Versions.ForType<SynergyISP.Domain.Entities.UserProfile, System.Guid>(),
+                session.Versions.ForType<SynergyISP.Domain.Entities.CustomerProfile, System.Guid>(),
                 _document
                 
             );
         }
 
 
-        public override Marten.Internal.Operations.IStorageOperation Upsert(SynergyISP.Domain.Entities.UserProfile document, Marten.Internal.IMartenSession session, string tenant)
+        public override Marten.Internal.Operations.IStorageOperation Upsert(SynergyISP.Domain.Entities.CustomerProfile document, Marten.Internal.IMartenSession session, string tenant)
         {
 
             return new Marten.Generated.DocumentStorage.UpsertUserProfileOperation791280756
             (
                 document, Identity(document),
-                session.Versions.ForType<SynergyISP.Domain.Entities.UserProfile, System.Guid>(),
+                session.Versions.ForType<SynergyISP.Domain.Entities.CustomerProfile, System.Guid>(),
                 _document
                 
             );
         }
 
 
-        public override Marten.Internal.Operations.IStorageOperation Overwrite(SynergyISP.Domain.Entities.UserProfile document, Marten.Internal.IMartenSession session, string tenant)
+        public override Marten.Internal.Operations.IStorageOperation Overwrite(SynergyISP.Domain.Entities.CustomerProfile document, Marten.Internal.IMartenSession session, string tenant)
         {
             throw new System.NotSupportedException();
         }
 
 
-        public override System.Guid Identity(SynergyISP.Domain.Entities.UserProfile document)
+        public override System.Guid Identity(SynergyISP.Domain.Entities.CustomerProfile document)
         {
             return document.Id;
         }
@@ -571,7 +571,7 @@ namespace Marten.Generated.DocumentStorage
     
     
     // START: IdentityMapUserProfileDocumentStorage791280756
-    public class IdentityMapUserProfileDocumentStorage791280756 : Marten.Internal.Storage.IdentityMapDocumentStorage<SynergyISP.Domain.Entities.UserProfile, System.Guid>
+    public class IdentityMapUserProfileDocumentStorage791280756 : Marten.Internal.Storage.IdentityMapDocumentStorage<SynergyISP.Domain.Entities.CustomerProfile, System.Guid>
     {
         private readonly Marten.Schema.DocumentMapping _document;
 
@@ -582,59 +582,59 @@ namespace Marten.Generated.DocumentStorage
 
 
 
-        public override System.Guid AssignIdentity(SynergyISP.Domain.Entities.UserProfile document, string tenantId, Marten.Storage.IMartenDatabase database)
+        public override System.Guid AssignIdentity(SynergyISP.Domain.Entities.CustomerProfile document, string tenantId, Marten.Storage.IMartenDatabase database)
         {
             if (document.Id == Guid.Empty) _setter(document, Marten.Schema.Identity.CombGuidIdGeneration.NewGuid());
             return document.Id;
         }
 
 
-        public override Marten.Internal.Operations.IStorageOperation Update(SynergyISP.Domain.Entities.UserProfile document, Marten.Internal.IMartenSession session, string tenant)
+        public override Marten.Internal.Operations.IStorageOperation Update(SynergyISP.Domain.Entities.CustomerProfile document, Marten.Internal.IMartenSession session, string tenant)
         {
 
             return new Marten.Generated.DocumentStorage.UpdateUserProfileOperation791280756
             (
                 document, Identity(document),
-                session.Versions.ForType<SynergyISP.Domain.Entities.UserProfile, System.Guid>(),
+                session.Versions.ForType<SynergyISP.Domain.Entities.CustomerProfile, System.Guid>(),
                 _document
                 
             );
         }
 
 
-        public override Marten.Internal.Operations.IStorageOperation Insert(SynergyISP.Domain.Entities.UserProfile document, Marten.Internal.IMartenSession session, string tenant)
+        public override Marten.Internal.Operations.IStorageOperation Insert(SynergyISP.Domain.Entities.CustomerProfile document, Marten.Internal.IMartenSession session, string tenant)
         {
 
             return new Marten.Generated.DocumentStorage.InsertUserProfileOperation791280756
             (
                 document, Identity(document),
-                session.Versions.ForType<SynergyISP.Domain.Entities.UserProfile, System.Guid>(),
+                session.Versions.ForType<SynergyISP.Domain.Entities.CustomerProfile, System.Guid>(),
                 _document
                 
             );
         }
 
 
-        public override Marten.Internal.Operations.IStorageOperation Upsert(SynergyISP.Domain.Entities.UserProfile document, Marten.Internal.IMartenSession session, string tenant)
+        public override Marten.Internal.Operations.IStorageOperation Upsert(SynergyISP.Domain.Entities.CustomerProfile document, Marten.Internal.IMartenSession session, string tenant)
         {
 
             return new Marten.Generated.DocumentStorage.UpsertUserProfileOperation791280756
             (
                 document, Identity(document),
-                session.Versions.ForType<SynergyISP.Domain.Entities.UserProfile, System.Guid>(),
+                session.Versions.ForType<SynergyISP.Domain.Entities.CustomerProfile, System.Guid>(),
                 _document
                 
             );
         }
 
 
-        public override Marten.Internal.Operations.IStorageOperation Overwrite(SynergyISP.Domain.Entities.UserProfile document, Marten.Internal.IMartenSession session, string tenant)
+        public override Marten.Internal.Operations.IStorageOperation Overwrite(SynergyISP.Domain.Entities.CustomerProfile document, Marten.Internal.IMartenSession session, string tenant)
         {
             throw new System.NotSupportedException();
         }
 
 
-        public override System.Guid Identity(SynergyISP.Domain.Entities.UserProfile document)
+        public override System.Guid Identity(SynergyISP.Domain.Entities.CustomerProfile document)
         {
             return document.Id;
         }
@@ -663,7 +663,7 @@ namespace Marten.Generated.DocumentStorage
     
     
     // START: DirtyTrackingUserProfileDocumentStorage791280756
-    public class DirtyTrackingUserProfileDocumentStorage791280756 : Marten.Internal.Storage.DirtyCheckedDocumentStorage<SynergyISP.Domain.Entities.UserProfile, System.Guid>
+    public class DirtyTrackingUserProfileDocumentStorage791280756 : Marten.Internal.Storage.DirtyCheckedDocumentStorage<SynergyISP.Domain.Entities.CustomerProfile, System.Guid>
     {
         private readonly Marten.Schema.DocumentMapping _document;
 
@@ -674,59 +674,59 @@ namespace Marten.Generated.DocumentStorage
 
 
 
-        public override System.Guid AssignIdentity(SynergyISP.Domain.Entities.UserProfile document, string tenantId, Marten.Storage.IMartenDatabase database)
+        public override System.Guid AssignIdentity(SynergyISP.Domain.Entities.CustomerProfile document, string tenantId, Marten.Storage.IMartenDatabase database)
         {
             if (document.Id == Guid.Empty) _setter(document, Marten.Schema.Identity.CombGuidIdGeneration.NewGuid());
             return document.Id;
         }
 
 
-        public override Marten.Internal.Operations.IStorageOperation Update(SynergyISP.Domain.Entities.UserProfile document, Marten.Internal.IMartenSession session, string tenant)
+        public override Marten.Internal.Operations.IStorageOperation Update(SynergyISP.Domain.Entities.CustomerProfile document, Marten.Internal.IMartenSession session, string tenant)
         {
 
             return new Marten.Generated.DocumentStorage.UpdateUserProfileOperation791280756
             (
                 document, Identity(document),
-                session.Versions.ForType<SynergyISP.Domain.Entities.UserProfile, System.Guid>(),
+                session.Versions.ForType<SynergyISP.Domain.Entities.CustomerProfile, System.Guid>(),
                 _document
                 
             );
         }
 
 
-        public override Marten.Internal.Operations.IStorageOperation Insert(SynergyISP.Domain.Entities.UserProfile document, Marten.Internal.IMartenSession session, string tenant)
+        public override Marten.Internal.Operations.IStorageOperation Insert(SynergyISP.Domain.Entities.CustomerProfile document, Marten.Internal.IMartenSession session, string tenant)
         {
 
             return new Marten.Generated.DocumentStorage.InsertUserProfileOperation791280756
             (
                 document, Identity(document),
-                session.Versions.ForType<SynergyISP.Domain.Entities.UserProfile, System.Guid>(),
+                session.Versions.ForType<SynergyISP.Domain.Entities.CustomerProfile, System.Guid>(),
                 _document
                 
             );
         }
 
 
-        public override Marten.Internal.Operations.IStorageOperation Upsert(SynergyISP.Domain.Entities.UserProfile document, Marten.Internal.IMartenSession session, string tenant)
+        public override Marten.Internal.Operations.IStorageOperation Upsert(SynergyISP.Domain.Entities.CustomerProfile document, Marten.Internal.IMartenSession session, string tenant)
         {
 
             return new Marten.Generated.DocumentStorage.UpsertUserProfileOperation791280756
             (
                 document, Identity(document),
-                session.Versions.ForType<SynergyISP.Domain.Entities.UserProfile, System.Guid>(),
+                session.Versions.ForType<SynergyISP.Domain.Entities.CustomerProfile, System.Guid>(),
                 _document
                 
             );
         }
 
 
-        public override Marten.Internal.Operations.IStorageOperation Overwrite(SynergyISP.Domain.Entities.UserProfile document, Marten.Internal.IMartenSession session, string tenant)
+        public override Marten.Internal.Operations.IStorageOperation Overwrite(SynergyISP.Domain.Entities.CustomerProfile document, Marten.Internal.IMartenSession session, string tenant)
         {
             throw new System.NotSupportedException();
         }
 
 
-        public override System.Guid Identity(SynergyISP.Domain.Entities.UserProfile document)
+        public override System.Guid Identity(SynergyISP.Domain.Entities.CustomerProfile document)
         {
             return document.Id;
         }
@@ -755,11 +755,11 @@ namespace Marten.Generated.DocumentStorage
     
     
     // START: UserProfileBulkLoader791280756
-    public class UserProfileBulkLoader791280756 : Marten.Internal.CodeGeneration.BulkLoader<SynergyISP.Domain.Entities.UserProfile, System.Guid>
+    public class UserProfileBulkLoader791280756 : Marten.Internal.CodeGeneration.BulkLoader<SynergyISP.Domain.Entities.CustomerProfile, System.Guid>
     {
-        private readonly Marten.Internal.Storage.IDocumentStorage<SynergyISP.Domain.Entities.UserProfile, System.Guid> _storage;
+        private readonly Marten.Internal.Storage.IDocumentStorage<SynergyISP.Domain.Entities.CustomerProfile, System.Guid> _storage;
 
-        public UserProfileBulkLoader791280756(Marten.Internal.Storage.IDocumentStorage<SynergyISP.Domain.Entities.UserProfile, System.Guid> storage) : base(storage)
+        public UserProfileBulkLoader791280756(Marten.Internal.Storage.IDocumentStorage<SynergyISP.Domain.Entities.CustomerProfile, System.Guid> storage) : base(storage)
         {
             _storage = storage;
         }
@@ -794,7 +794,7 @@ namespace Marten.Generated.DocumentStorage
         }
 
 
-        public override void LoadRow(Npgsql.NpgsqlBinaryImporter writer, SynergyISP.Domain.Entities.UserProfile document, Marten.Storage.Tenant tenant, Marten.ISerializer serializer)
+        public override void LoadRow(Npgsql.NpgsqlBinaryImporter writer, SynergyISP.Domain.Entities.CustomerProfile document, Marten.Storage.Tenant tenant, Marten.ISerializer serializer)
         {
             writer.Write(document.GetType().FullName, NpgsqlTypes.NpgsqlDbType.Varchar);
             writer.Write(document.Id, NpgsqlTypes.NpgsqlDbType.Uuid);
@@ -803,7 +803,7 @@ namespace Marten.Generated.DocumentStorage
         }
 
 
-        public override async System.Threading.Tasks.Task LoadRowAsync(Npgsql.NpgsqlBinaryImporter writer, SynergyISP.Domain.Entities.UserProfile document, Marten.Storage.Tenant tenant, Marten.ISerializer serializer, System.Threading.CancellationToken cancellation)
+        public override async System.Threading.Tasks.Task LoadRowAsync(Npgsql.NpgsqlBinaryImporter writer, SynergyISP.Domain.Entities.CustomerProfile document, Marten.Storage.Tenant tenant, Marten.ISerializer serializer, System.Threading.CancellationToken cancellation)
         {
             await writer.WriteAsync(document.GetType().FullName, NpgsqlTypes.NpgsqlDbType.Varchar, cancellation);
             await writer.WriteAsync(document.Id, NpgsqlTypes.NpgsqlDbType.Uuid, cancellation);
@@ -829,7 +829,7 @@ namespace Marten.Generated.DocumentStorage
     
     
     // START: UserProfileProvider791280756
-    public class UserProfileProvider791280756 : Marten.Internal.Storage.DocumentProvider<SynergyISP.Domain.Entities.UserProfile>
+    public class UserProfileProvider791280756 : Marten.Internal.Storage.DocumentProvider<SynergyISP.Domain.Entities.CustomerProfile>
     {
         private readonly Marten.Schema.DocumentMapping _mapping;
 

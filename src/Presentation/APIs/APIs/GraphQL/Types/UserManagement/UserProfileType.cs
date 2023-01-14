@@ -4,12 +4,11 @@ using SynergyISP.Domain.Entities;
 /// <summary>
 /// The user profile type.
 /// </summary>
-public class UserProfileType : ObjectType<UserProfile>
+public class CustomerProfileType : ObjectType<CustomerProfile>
 {
     /// <inheritdoc/>
-    protected override void Configure(IObjectTypeDescriptor<UserProfile> descriptor)
+    protected override void Configure(IObjectTypeDescriptor<CustomerProfile> descriptor)
     {
-        base.Configure(descriptor);
         descriptor
             .Field(u => u.Id)
             .Ignore();
@@ -24,11 +23,12 @@ public class UserProfileType : ObjectType<UserProfile>
             .Type<StringType>()
             .Resolve(ctx =>
             {
-                UserProfile profile = ctx.Parent<UserProfile>();
+                CustomerProfile profile = ctx.Parent<CustomerProfile>();
                 string dataType = profile.DataType;
                 return dataType.Equals(typeof(DateTime).Name)
                     ? DateTimeOffset.Parse(profile.Value).ToLocalTime().ToString()
                     : profile.Value;
             });
+        base.Configure(descriptor);
     }
 }

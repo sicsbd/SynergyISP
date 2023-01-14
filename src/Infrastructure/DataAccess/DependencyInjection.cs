@@ -3,15 +3,12 @@
 using DataAccess;
 using DataAccess.Repositories;
 using Domain.Abstractions;
-using Domain.ValueObjects;
 using JasperFx.CodeGeneration;
 using Marten;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Npgsql;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
 using Weasel.Core;
 using static Marten.MartenServiceCollectionExtensions;
 

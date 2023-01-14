@@ -16,6 +16,13 @@ public interface IAggregateRoot<TEntity, TKey>
     void ResolveDependencies(IServiceProvider serviceProvider);
 
     /// <summary>
+    /// Resolve all dependencies.
+    /// </summary>
+    /// <param name="serviceProvider">The service provider.</param>
+    /// <returns>Task.</returns>
+    Task ResolveDependenciesAsync(IServiceProvider serviceProvider);
+
+    /// <summary>
     /// Converts an aggregate root to entity.
     /// </summary>
     /// <returns>An entity.</returns>

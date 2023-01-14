@@ -1,5 +1,4 @@
-﻿using NUnit.Framework;
-using Xunit;
+﻿using Xunit;
 
 namespace SynergyISP.Tests.Core.Web;
 

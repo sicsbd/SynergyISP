@@ -1,11 +1,10 @@
 ﻿namespace SynergyISP.Domain.Entities;
 
 using System;
-using SynergyISP.Domain.Abstractions;
 using SynergyISP.Domain.Aggregates;
 using ValueObjects;
 
-public record class UserProfile : IUserProfileAggregate<User<UserId>, UserId>
+public record class CustomerProfile : IUserProfileAggregate<Customer, CustomerId>
 {
     /// <inheritdoc/>
     public Guid Id { get; init; }
@@ -25,7 +24,8 @@ public record class UserProfile : IUserProfileAggregate<User<UserId>, UserId>
     /// </summary>
     public string Value { get; init; } = null!;
 
-    public IUserProfileAggregate<User<UserId>, UserId> ChangeProfile(UserId userId, string key, string value)
+    /// <inheritdoc/>
+    public IUserProfileAggregate<Customer, CustomerId> ChangeProfile(CustomerId userId, string key, string value)
     {
         return this with
         {
@@ -36,6 +36,7 @@ public record class UserProfile : IUserProfileAggregate<User<UserId>, UserId>
         };
     }
 
+    /// <inheritdoc/>
     public void ResolveDependencies(IServiceProvider serviceProvider)
     {
         throw new NotImplementedException();
