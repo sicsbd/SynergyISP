@@ -1,8 +1,7 @@
 ﻿namespace SynergyISP.Presentation.APIs.GraphQL.Types.UserManagement;
-
-using Domain.Entities;
+using SynergyISP.Domain.Entities;
 using Marten;
-using SynergyISP.Presentation.APIs.GraphQL.Types.UserManagement.ScalarTypes;
+using ScalarTypes;
 
 /// <inheritdoc />
 public class OrgUserType : ObjectType<OrganizationUser>

@@ -1,7 +1,7 @@
-﻿namespace SynergyISP.Presentation.APIs.GraphQL.Types.UserManagement.ScalarTypes;
-using Domain.ValueObjects;
-using HotChocolate.Language;
+﻿using HotChocolate.Language;
+using SynergyISP.Domain.ValueObjects;
 
+namespace SynergyISP.Presentation.APIs.GraphQL.Types.UserManagement.ScalarTypes;
 /// <summary>
 /// The name type.
 /// </summary>

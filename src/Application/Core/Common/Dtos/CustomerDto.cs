@@ -1,8 +1,9 @@
 ﻿
-namespace SynergyISP.Application.Common.Dtos;
-using Domain.Abstractions;
-using Domain.Entities;
+using AutoMapper;
+using SynergyISP.Domain.Abstractions;
+using SynergyISP.Domain.Entities;
 
+namespace SynergyISP.Application.Common.Dtos;
 public sealed record class CustomerDto
     : UserDto, IMapFrom<Customer>, IMapTo<Customer>
 {
@@ -32,5 +33,26 @@ public sealed record class CustomerDto
         string? nickName)
         : base(id, userName, firstName, lastName, displayName, nickName)
     {
+    }
+
+    public string FullName { get; private init; }
+
+    public static implicit operator CustomerDto(Customer customer)
+    {
+        return new CustomerDto(
+            customer.Id,
+            customer.UserName,
+            customer.FirstName,
+            customer.LastName,
+            customer.DisplayName,
+            customer.NickName);
+    }
+
+    /// <inheritdoc/>
+    void IMapFrom<Customer>.Mapping(Profile profile)
+    {
+        profile
+            .CreateMap<Customer, CustomerDto>()
+            .ForMember(c => c.FullName, opt => opt.MapFrom(src => src.FirstName + src.LastName));
     }
 }

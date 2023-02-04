@@ -1,6 +1,6 @@
-﻿namespace SynergyISP.Domain.Abstractions;
-using AutoMapper;
+﻿using AutoMapper;
 
+namespace SynergyISP.Domain.Abstractions;
 public interface IMap<T>
     where T : class
 {

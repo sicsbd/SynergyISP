@@ -1,8 +1,8 @@
-﻿namespace SynergyISP.Domain.Entities;
-using Aggregates;
-using SynergyISP.Domain.Abstractions;
-using ValueObjects;
+﻿using SynergyISP.Domain.Abstractions;
+using SynergyISP.Domain.Aggregates;
+using SynergyISP.Domain.ValueObjects;
 
+namespace SynergyISP.Domain.Entities;
 public sealed record class TenantUser
     : User<TenantUserId>, IAggregateRoot<TenantUser, TenantUserId>
 {

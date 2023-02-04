@@ -1,7 +1,7 @@
-﻿namespace SynergyISP.Application.Common.Dtos;
-using Domain.Abstractions;
-using Domain.Entities;
+﻿using SynergyISP.Domain.Abstractions;
+using SynergyISP.Domain.Entities;
 
+namespace SynergyISP.Application.Common.Dtos;
 public sealed record class OrganizationUserDto
     : UserDto, IMapFrom<OrganizationUser>, IMapTo<OrganizationUser>
 {

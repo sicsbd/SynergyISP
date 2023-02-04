@@ -1,9 +1,9 @@
-﻿namespace SynergyISP.Domain.ValueObjects;
-
+﻿
 using System.Diagnostics.CodeAnalysis;
-using Abstractions;
 using Newtonsoft.Json;
+using SynergyISP.Domain.Abstractions;
 
+namespace SynergyISP.Domain.ValueObjects;
 /// <summary>
 /// Represents a UserId.
 /// </summary>

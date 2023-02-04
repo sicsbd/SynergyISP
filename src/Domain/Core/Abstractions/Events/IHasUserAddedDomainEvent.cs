@@ -1,8 +1,8 @@
-﻿namespace SynergyISP.Domain.Abstractions.Events;
-using Domain.ValueObjects;
-using Entities;
+﻿using SynergyISP.Domain.Entities;
 using SynergyISP.Domain.Events;
+using SynergyISP.Domain.ValueObjects;
 
+namespace SynergyISP.Domain.Abstractions.Events;
 public interface IHasUserAddedDomainEvent<TEvent, TUser, TKey>
     : IHasDomainEvent<TEvent, TUser>
     where TEvent : DomainEvent<TUser>

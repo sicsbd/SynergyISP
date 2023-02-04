@@ -1,6 +1,6 @@
-﻿namespace SynergyISP.Presentation.APIs.GraphQL.Types;
-using UserManagement;
+﻿using SynergyISP.Presentation.APIs.GraphQL.Types.UserManagement;
 
+namespace SynergyISP.Presentation.APIs.GraphQL.Types;
 public class MutationType : ObjectType<Mutation>
 {
     /// <inheritdoc/>

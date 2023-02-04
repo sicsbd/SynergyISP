@@ -38,4 +38,8 @@
         <InternalsVisibleTo Include="$(AssemblyName).IntegrationTests" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="GraphQL\Helpers\" />
+    </ItemGroup>
+
 </Project>

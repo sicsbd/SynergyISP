@@ -1,8 +1,8 @@
-﻿namespace SynergyISP.Domain.Entities;
-using Abstractions;
-using Aggregates;
-using ValueObjects;
+﻿using SynergyISP.Domain.Abstractions;
+using SynergyISP.Domain.Aggregates;
+using SynergyISP.Domain.ValueObjects;
 
+namespace SynergyISP.Domain.Entities;
 public sealed record class OrganizationUser
     : User<OrganizationUserId>, IAggregateRoot<OrganizationUser, OrganizationUserId>
 {

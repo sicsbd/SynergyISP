@@ -1,12 +1,10 @@
-﻿namespace SynergyISP.Infrastructure.DataAccess.Repositories;
-using System.Linq;
-using System.Threading;
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Domain.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using SynergyISP.Domain.Abstractions;
 
+namespace SynergyISP.Infrastructure.DataAccess.Repositories;
 internal class ReadRepository<TEntity, TKey, TAggregateRoot>
     : IReadRepository<TEntity, TKey, TAggregateRoot>
     where TEntity : class, IEntity<TKey>, IAggregateRoot<TEntity, TKey>

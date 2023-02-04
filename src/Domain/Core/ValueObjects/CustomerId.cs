@@ -1,9 +1,9 @@
-﻿namespace SynergyISP.Domain.ValueObjects;
-
+﻿
 using System.Diagnostics.CodeAnalysis;
-using Abstractions;
 using Newtonsoft.Json;
+using SynergyISP.Domain.Abstractions;
 
+namespace SynergyISP.Domain.ValueObjects;
 /// <summary>
 /// Represents a UserId.
 /// </summary>
@@ -24,7 +24,6 @@ public record class CustomerId
     /// Initializes a new instance of the <see cref="CustomerId"/> class.
     /// </summary>
     /// <param name="original">The original.</param>
-    [JsonConstructor]
     public CustomerId(Guid original)
     {
         Value = original;

@@ -1,7 +1,7 @@
-﻿namespace SynergyISP.Presentation.APIs.GraphQL.Types.UserManagement.InputTypes;
-using HotChocolate.Data.Filters;
+﻿using HotChocolate.Data.Filters;
 using SynergyISP.Application.Common.Dtos;
 
+namespace SynergyISP.Presentation.APIs.GraphQL.Types.UserManagement.InputTypes;
 /// <inheritdoc />
 public class CustomerFilterInputType : FilterInputType<CustomerDto>
 {

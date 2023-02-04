@@ -1,7 +1,7 @@
-﻿namespace SynergyISP.Application.Common.Mappings; using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using AutoMapper;
 
-internal class MapperConfigurationProvider
+namespace SynergyISP.Application.Common.Mappings; internal class MapperConfigurationProvider
     : IConfigurationProvider
 {
     private readonly MapperConfiguration _mapperConfiguration;

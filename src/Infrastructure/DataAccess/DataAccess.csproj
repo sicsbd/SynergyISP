@@ -9,6 +9,11 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="EasyCaching.Redis" Version="1.8.0" />
+        <PackageReference Include="EasyCaching.Serialization.MessagePack" Version="1.8.0" />
+        <PackageReference Include="EFCoreSecondLevelCacheInterceptor" Version="3.8.3" />
+        <PackageReference Include="Faker.Net" Version="2.0.154" />
+        <PackageReference Include="HotChocolate.Types" Version="12.16.0" />
         <PackageReference Include="Marten" Version="6.0.0-alpha.6" />
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0" />
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.4.0" />
@@ -16,8 +21,9 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="7.0.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="7.0.2" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.1" />
+        <PackageReference Include="Scrutor" Version="4.2.0" />
         <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

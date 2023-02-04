@@ -1,13 +1,15 @@
-﻿namespace SynergyISP.Domain.Entities;
-using Aggregates;
+﻿using System.Text.Json.Serialization;
+using SynergyISP.Domain.Aggregates;
 using SynergyISP.Domain.ValueObjects;
 
+namespace SynergyISP.Domain.Entities;
 public sealed record class Customer
     : User<CustomerId>, IUserAggregateRoot<Customer, CustomerId>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="Customer"/> class.
     /// </summary>
+    [JsonConstructor]
     public Customer()
     {
         Id = new CustomerId();
@@ -23,18 +25,18 @@ public sealed record class Customer
     }
 
     /// <inheritdoc />
-    public new IUserProfileAggregate<Customer, CustomerId>? Profile { get; private init; }
+    public new List<CustomerProfileAggregate>? Profile { get; init; }
 
     /// <inheritdoc/>
-    public IUserAggregateRoot<Customer, CustomerId> ChangeAccount(
+    public new IUserAggregateRoot<Customer, CustomerId> ChangeAccount(
+        CustomerId? id,
         UserName? userName,
         Name? firstName,
         Name? lastName,
         Name? displayName,
         Name? nickName,
         Password? password,
-        CustomerId? id,
-        IUserProfileAggregate<Customer, CustomerId>? profile)
+        List<CustomerProfileAggregate>? profile)
     {
         return this with
         {
@@ -73,11 +75,11 @@ public sealed record class Customer
     }
 
     /// <inheritdoc/>
-    IUserAggregate<Customer, CustomerId> IUserAggregate<Customer, CustomerId>.ChangeProfile(IUserProfileAggregate<Customer, CustomerId> profile)
+    IUserAggregate<Customer, CustomerId> IUserAggregate<Customer, CustomerId>.ChangeProfile(List<UserProfileAggregate<Customer, CustomerId>> profile)
     {
         return this with
         {
-            Profile = profile,
+            Profile = profile.Select(x => x as CustomerProfileAggregate).ToList() !,
         };
     }
 }

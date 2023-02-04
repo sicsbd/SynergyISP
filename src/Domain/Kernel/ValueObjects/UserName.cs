@@ -1,10 +1,10 @@
-﻿namespace SynergyISP.Domain.ValueObjects;
-
+﻿
 using System.Diagnostics.CodeAnalysis;
-using Abstractions;
-using Domain.Helpers;
 using Newtonsoft.Json;
+using SynergyISP.Domain.Abstractions;
+using SynergyISP.Domain.Helpers;
 
+namespace SynergyISP.Domain.ValueObjects;
 public readonly record struct UserName : IValueObject, IEquatable<string>
 {
     /// <summary>

@@ -1,7 +1,7 @@
-﻿namespace SynergyISP.Infrastructure.DataAccess.EntityTypeConfigurations.Converters;
-using Domain.ValueObjects;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using SynergyISP.Domain.ValueObjects;
 
+namespace SynergyISP.Infrastructure.DataAccess.EntityTypeConfigurations.Converters;
 internal class NameConverter : ValueConverter<Name, string>
 {
     /// <summary>

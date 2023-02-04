@@ -1,17 +1,19 @@
-﻿namespace SynergyISP.Infrastructure.DataAccess;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.EntityFrameworkCore;
+using SynergyISP.Application.Common.Helpers;
 using SynergyISP.Domain.Abstractions;
 using SynergyISP.Domain.ValueObjects;
 
+namespace SynergyISP.Infrastructure.DataAccess;
 /// <summary>
 /// The data context.
 /// </summary>
 public class DataContext
     : DbContext, IReadDataContext, IWriteDataContext
 {
-    private readonly IHostEnvironment _hostEnvironment;
-
+    /// <summary>
+    /// Initializes a new instance of the <see cref="DataContext"/> class.
+    /// </summary>
+    /// <param name="dbContextOptions">The db context options.</param>
     public DataContext(
         DbContextOptions<DataContext> dbContextOptions)
         : base(dbContextOptions)
@@ -23,6 +25,14 @@ public class DataContext
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(DataContext).Assembly);
         modelBuilder.HasPostgresExtension("uuid-ossp");
+        modelBuilder.HasPostgresExtension("fuzzystrmatch");
+        modelBuilder.HasDbFunction(
+            typeof(SoundsLikeHelper).GetMethods().Where(m => m.Name.Equals(nameof(SoundsLikeHelper.Soundex)) && m.GetParameters().Length == 1).First(),
+            b =>
+            {
+                b.HasName("SOUNDEX");
+                b.IsBuiltIn();
+            });
         base.OnModelCreating(modelBuilder);
     }
 

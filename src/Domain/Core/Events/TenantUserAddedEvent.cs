@@ -1,9 +1,9 @@
-﻿namespace SynergyISP.Domain.Events;
-
-using Entities;
+﻿
 using SynergyISP.Domain.Abstractions.Events;
-using ValueObjects;
+using SynergyISP.Domain.Entities;
+using SynergyISP.Domain.ValueObjects;
 
+namespace SynergyISP.Domain.Events;
 public sealed record class TenantUserAddedEvent
     : UserAddedEvent<TenantUser, TenantUserId>
 {

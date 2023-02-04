@@ -1,10 +1,9 @@
-﻿namespace SynergyISP.Presentation.APIs.GraphQL.Types;
-using HotChocolate.Execution;
-
+﻿using HotChocolate.Execution;
 using HotChocolate.Subscriptions;
 using SynergyISP.Domain.Entities;
-using UserManagement;
+using SynergyISP.Presentation.APIs.GraphQL.Types.UserManagement;
 
+namespace SynergyISP.Presentation.APIs.GraphQL.Types;
 public class SubscriptionType : ObjectType
 {
     /// <inheritdoc/>

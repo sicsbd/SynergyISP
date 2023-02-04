@@ -5,7 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AssemblyName>SynergyISP.Application.Kernel</AssemblyName>
-        <RootNamespace>$(AssemblyName)</RootNamespace>
+        <RootNamespace>SynergyISP.Application</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

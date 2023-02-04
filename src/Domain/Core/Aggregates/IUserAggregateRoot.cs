@@ -1,8 +1,8 @@
-﻿namespace SynergyISP.Domain.Aggregates;
-using Abstractions;
-using Entities;
-using ValueObjects;
+﻿using SynergyISP.Domain.Abstractions;
+using SynergyISP.Domain.Entities;
+using SynergyISP.Domain.ValueObjects;
 
+namespace SynergyISP.Domain.Aggregates;
 /// <summary>
 /// The user aggregate root.
 /// </summary>
@@ -18,7 +18,7 @@ public interface IUserAggregateRoot<TUser, TKey>
     /// </summary>
     /// <param name="password">The password.</param>
     /// <returns>An IUserAggregateRoot.</returns>
-    IUserAggregateRoot<TUser, TKey> ChangePassword(Password password);
+    IUserAggregateRoot<TUser, TKey>? ChangePassword(Password password);
 
     /// <summary>
     /// Changes the account.
@@ -40,7 +40,7 @@ public interface IUserAggregateRoot<TUser, TKey>
         Name? displayName,
         Name? nickName,
         Password? password,
-        IUserProfileAggregate<User<TKey>, TKey>? profile);
+        List<UserProfileAggregate<User<TKey>, TKey>>? profile);
 
     /// <summary>
     /// Creates the user into the database asynchronously.

@@ -1,41 +1,60 @@
-﻿namespace SynergyISP.Domain.Aggregates;
+﻿using SynergyISP.Domain.Entities;
+using SynergyISP.Domain.ValueObjects;
 
-using System;
-using Entities;
-using ValueObjects;
-
+namespace SynergyISP.Domain.Aggregates;
 /// <summary>
 /// The user profile aggregate.
 /// </summary>
-public record class UserProfileAggregate
-    : IUserProfileAggregate<User<UserId>, UserId>
+public abstract record class UserProfileAggregate<TUser, TKey>
+    : IUserProfileAggregate<TUser, TKey>
+    where TUser : User<TKey>
+    where TKey : UserId
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="UserProfileAggregate"/> class.
     /// </summary>
     /// <param name="firstName">The first name.</param>
-    public UserProfileAggregate()
+    protected UserProfileAggregate()
     {
     }
 
     /// <inheritdoc/>
-    public string ProfileKey { get; private init; }
+    public virtual Guid Id { get; init; }
 
     /// <inheritdoc/>
-    public string DataType { get; private init; }
+    public virtual Guid UserId { get; init; }
 
     /// <inheritdoc/>
-    public string Value { get; private init; }
+    public virtual string Field { get; init; } = null!;
 
     /// <inheritdoc/>
-    public IUserProfileAggregate<User<UserId>, UserId> ChangeProfile(UserId userId, string key, string value)
+    public virtual string DataType { get; init; } = null!;
+
+    /// <inheritdoc/>
+    public virtual object Value { get; init; } = null!;
+
+    /// <inheritdoc/>
+    public IUserProfileAggregate<TUser, TKey> ChangeInfo<T>(
+        string key,
+        T value,
+        TKey? id = null)
+        where T : notnull
     {
-        return this with
-        {
-            ProfileKey = key,
-            DataType = null!,
-            Value = value,
-        };
+        return id is not null
+            ? this with
+            {
+                UserId = id.Value,
+                Field = key,
+                DataType = typeof(T).Name,
+                Value = value,
+            }
+            : this with
+            {
+                UserId = Guid.NewGuid(),
+                Field = key,
+                DataType = typeof(T).Name,
+                Value = value,
+            };
     }
 
     /// <inheritdoc/>

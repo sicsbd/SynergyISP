@@ -1,44 +1,24 @@
-﻿namespace SynergyISP.Domain.Entities;
+﻿using SynergyISP.Domain.Aggregates;
+using SynergyISP.Domain.ValueObjects;
 
-using System;
-using SynergyISP.Domain.Aggregates;
-using ValueObjects;
-
-public record class CustomerProfile : IUserProfileAggregate<Customer, CustomerId>
+namespace SynergyISP.Domain.Entities;
+public record class CustomerProfile
+    : UserProfileAggregate<Customer, CustomerId>, IUserProfileAggregate<Customer, CustomerId>
 {
-    /// <inheritdoc/>
-    public Guid Id { get; init; }
-
     /// <summary>
-    /// Gets or inits the profile key.
+    /// Initializes a new instance of the <see cref="CustomerProfile"/> class.
     /// </summary>
-    public string ProfileKey { get; init; } = null!;
-
-    /// <summary>
-    /// Gets or inits the data type.
-    /// </summary>
-    public string DataType { get; init; } = null!;
-
-    /// <summary>
-    /// Gets or inits the value.
-    /// </summary>
-    public string Value { get; init; } = null!;
-
-    /// <inheritdoc/>
-    public IUserProfileAggregate<Customer, CustomerId> ChangeProfile(CustomerId userId, string key, string value)
+    public CustomerProfile()
     {
-        return this with
-        {
-            Id = userId,
-            ProfileKey = key,
-            DataType = null!,
-            Value = value
-        };
     }
 
-    /// <inheritdoc/>
-    public void ResolveDependencies(IServiceProvider serviceProvider)
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CustomerProfile"/> class.
+    /// </summary>
+    /// <param name="id">The id.</param>
+    public CustomerProfile(Guid id)
+        : base()
     {
-        throw new NotImplementedException();
+        Id = id;
     }
 }

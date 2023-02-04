@@ -1,9 +1,10 @@
-﻿namespace SynergyISP.Application.Specifications;
-using System.Linq.Expressions;
-using Domain.Abstractions;
-using Domain.Entities;
-using Domain.Enumns;
-using Domain.ValueObjects;
+﻿using System.Linq.Expressions;
+using SynergyISP.Domain.Abstractions;
+using SynergyISP.Domain.Entities;
+using SynergyISP.Domain.Enumns;
+using SynergyISP.Domain.ValueObjects;
+
+namespace SynergyISP.Application.Specifications;
 public record class GetUserWithProfileByIdSpec
     : ISpecification<User<UserId>, UserId>
 {

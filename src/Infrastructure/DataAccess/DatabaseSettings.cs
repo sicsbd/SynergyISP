@@ -1,6 +1,6 @@
-﻿namespace SynergyISP.Infrastructure;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
+namespace SynergyISP.Infrastructure;
 /// <summary>
 /// The database settings.
 /// </summary>

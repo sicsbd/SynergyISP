@@ -1,19 +1,17 @@
 ﻿namespace SynergyISP.Presentation.APIs.GraphQL.Types.UserManagement;
-
-using System.IO.Pipelines;
 using Domain.Entities;
-using HotChocolate.Resolvers;
-using Marten;
 using ScalarTypes;
+using SynergyISP.Presentation.APIs.GraphQL.DataLoaders;
 
 /// <inheritdoc />
-public class CustomerType : ObjectType<Customer>
+public partial class CustomerType : ObjectType<Customer>
 {
     /// <inheritdoc />
     protected override void Configure(IObjectTypeDescriptor<Customer> descriptor)
     {
         base.Configure(descriptor);
         descriptor.Description("Represents a customer of the ISP.");
+        descriptor.BindFieldsExplicitly();
         descriptor
             .Field(u => u.Id)
             .Name("id")
@@ -40,8 +38,14 @@ public class CustomerType : ObjectType<Customer>
             .Type<NameType>();
         descriptor
             .Field(u => u.Profile)
-            .Type<CustomerProfileType>()
-            .ResolveWith<CustomerProfileResolver>(r => r.GetProfile(null!, CancellationToken.None));
+            .Type<ListType<CustomerProfileType>>()
+            .UseDataloader<CustomerProfileBatchLoader>()
+            .UseDataloader<CustomerProfileCatchLoader>()
+            .UsePaging()
+            //.ResolveWith<CustomerProfileResolver>(r => r.GetProfile(null!, null!, null!))
+            .ResolveWith<CustomerProfileResolver>(r => r.GetProfiles(default!, default!, default!))
+            //.IsProjected(false)
+            ;
         descriptor
             .Field("fullName")
             .Resolve(ctx =>
@@ -49,32 +53,26 @@ public class CustomerType : ObjectType<Customer>
                 Customer user = ctx.Parent<Customer>();
                 return user.FirstName + user.LastName;
             });
-    }
-
-    public class CustomerProfileResolver : IDisposable
-    {
-        private readonly IDocumentStore _documentStore;
-
-        public CustomerProfileResolver(
-            IDocumentStore documentStore)
-        {
-            _documentStore = documentStore;
-        }
-
-        public void Dispose()
-        {
-            _documentStore?.Dispose();
-        }
-
-        public async Task<CustomerProfile?> GetProfile(
-            IResolverContext ctx,
-            CancellationToken ct = default)
-        {
-            Customer user = ctx.Parent<Customer>();
-            using IDocumentSession documentSession = _documentStore.LightweightSession();
-            return await documentSession
-                .Query<CustomerProfile>()
-                .SingleOrDefaultAsync(x => x.Id.Equals((Guid)user.Id), token: ct!);
-        }
+        descriptor
+            .Field(c => c.CreateDate)
+            .IsProjected(false);
+        descriptor
+            .Field(c => c.CreatedBy)
+            .IsProjected(false);
+        descriptor
+            .Field(c => c.LastModifiedAt)
+            .IsProjected(false);
+        descriptor
+            .Field(c => c.LastModifiedBy)
+            .IsProjected(false);
+        descriptor
+            .Field(c => c.DeletedAt)
+            .IsProjected(false);
+        descriptor
+            .Field(c => c.DeletedBy)
+            .IsProjected(false);
+        descriptor
+            .Field(c => c.IsDeleted)
+            .IsProjected(false);
     }
 }

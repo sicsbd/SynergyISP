@@ -1,10 +1,9 @@
-﻿namespace SynergyISP.Domain.Abstractions;
-
+﻿
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using SynergyISP.Domain.ValueObjects;
 
-using ValueObjects;
-
+namespace SynergyISP.Domain.Abstractions;
 public abstract record class AuditableEntity<TKey>
     : IEntity<TKey>, IAuditableEntityAggregate<TKey>
     where TKey : Id

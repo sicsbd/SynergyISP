@@ -1,24 +1,24 @@
-﻿namespace SynergyISP.Domain.ValueObjects;
-
+﻿
 using System.Diagnostics.CodeAnalysis;
 using System.Security.Cryptography;
 using System.Text;
-using Abstractions;
-using Helpers;
 using Newtonsoft.Json;
+using SynergyISP.Domain.Abstractions;
+using SynergyISP.Domain.Helpers;
 
+namespace SynergyISP.Domain.ValueObjects;
 public record class Password : IPassword<Password>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="Password"/> class.
     /// </summary>
+    [JsonConstructor]
     public Password() => Value = string.Empty;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Password"/> class.
     /// </summary>
     /// <param name="password">The password.</param>
-    [JsonConstructor]
     public Password(string password)
         => Value = password.ComputeHash(SHA512.Create(), Encoding.UTF8);
 

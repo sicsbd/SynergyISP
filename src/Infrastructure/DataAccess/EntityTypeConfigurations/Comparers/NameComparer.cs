@@ -1,7 +1,7 @@
-﻿namespace SynergyISP.Infrastructure.DataAccess.EntityTypeConfigurations.Comparers;
-using Domain.ValueObjects;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using SynergyISP.Domain.ValueObjects;
 
+namespace SynergyISP.Infrastructure.DataAccess.EntityTypeConfigurations.Comparers;
 internal class NameComparer : ValueComparer<Name>
 {
     /// <summary>

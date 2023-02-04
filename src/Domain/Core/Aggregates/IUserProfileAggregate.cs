@@ -1,9 +1,9 @@
-﻿namespace SynergyISP.Domain.Aggregates;
-
-using Abstractions;
+﻿
+using SynergyISP.Domain.Abstractions;
 using SynergyISP.Domain.Entities;
-using ValueObjects;
+using SynergyISP.Domain.ValueObjects;
 
+namespace SynergyISP.Domain.Aggregates;
 /// <summary>
 /// The user profile aggregate.
 /// </summary>
@@ -12,8 +12,10 @@ public interface IUserProfileAggregate<TUser, TKey>
     where TUser : User<TKey>
     where TKey : UserId
 {
-    string ProfileKey { get; }
+    Guid Id { get; }
+    string Field { get; }
     string DataType { get; }
-    string Value { get; }
-    public IUserProfileAggregate<TUser, TKey> ChangeProfile(TKey userId, string key, string value);
+    object Value { get; }
+    public IUserProfileAggregate<TUser, TKey> ChangeInfo<T>(string key, T value, TKey? id = null)
+        where T : notnull;
 }

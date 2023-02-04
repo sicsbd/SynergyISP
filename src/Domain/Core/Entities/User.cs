@@ -1,11 +1,10 @@
-﻿namespace SynergyISP.Domain.Entities;
-
-using Abstractions;
-using Aggregates;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using ValueObjects;
+using SynergyISP.Domain.Abstractions;
+using SynergyISP.Domain.Aggregates;
+using SynergyISP.Domain.ValueObjects;
 
+namespace SynergyISP.Domain.Entities;
 public abstract record class User<TKey>
     : AuditableEntity<TKey>, IUserAggregateRoot<User<TKey>, TKey>, IUserAggregate<User<TKey>, TKey>
     where TKey : UserId
@@ -28,9 +27,6 @@ public abstract record class User<TKey>
         : base(id)
     {
     }
-
-    /// <inheritdoc />
-    public new TKey Id { get; protected init; } = null!;
 
     /// <summary>
     /// Gets a value for user name.
@@ -63,7 +59,7 @@ public abstract record class User<TKey>
     public Password Password { get; protected init; } = string.Empty;
 
     /// <inheritdoc/>
-    public virtual IUserProfileAggregate<User<TKey>, TKey>? Profile { get; protected init; }
+    public virtual List<UserProfileAggregate<User<TKey>, TKey>>? Profile { get; protected init; }
 
     /// <inheritdoc/>
     public virtual IUserAggregateRoot<User<TKey>, TKey> ChangeAccount(
@@ -74,7 +70,7 @@ public abstract record class User<TKey>
         Name? displayName,
         Name? nickName,
         Password? password,
-        IUserProfileAggregate<User<TKey>, TKey>? profile)
+        List<UserProfileAggregate<User<TKey>, TKey>>? profile)
     {
         return this with
         {
@@ -96,7 +92,7 @@ public abstract record class User<TKey>
     }
 
     /// <inheritdoc/>
-    public virtual IUserAggregate<User<TKey>, TKey> ChangeProfile(IUserProfileAggregate<User<TKey>, TKey> profile)
+    public virtual IUserAggregate<User<TKey>, TKey> ChangeProfile(List<UserProfileAggregate<User<TKey>, TKey>> profile)
     {
         return this with
         {

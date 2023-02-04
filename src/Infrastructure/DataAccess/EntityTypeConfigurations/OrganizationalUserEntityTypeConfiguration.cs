@@ -1,11 +1,9 @@
-﻿namespace SynergyISP.Infrastructure.DataAccess.EntityTypeConfigurations;
-
-using System.Collections.Generic;
-using Domain.Entities;
-using Domain.ValueObjects;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SynergyISP.Domain.Entities;
+using SynergyISP.Domain.ValueObjects;
 
+namespace SynergyISP.Infrastructure.DataAccess.EntityTypeConfigurations;
 /// <summary>
 /// The user entity type configuration.
 /// </summary>

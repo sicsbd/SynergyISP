@@ -1,9 +1,9 @@
-﻿namespace SynergyISP.Domain.Abstractions;
-
+﻿
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using Newtonsoft.Json;
 
+namespace SynergyISP.Domain.Abstractions;
 public record class Id
     : IValueObject, IEquatable<Guid>, IComparable<Id>, IComparable<Guid>, ICloneable
 {

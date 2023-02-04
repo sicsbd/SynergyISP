@@ -1,14 +1,14 @@
-﻿namespace SynergyISP.Application;
-using System.Reflection;
+﻿using System.Reflection;
 using AutoMapper;
 using AutoMapper.Internal;
-using Microsoft.Extensions.DependencyInjection;
-using Common.Mappings;
-using Domain.ValueObjects;
-using MediatR;
-using FluentValidation.AspNetCore;
 using FluentValidation;
+using FluentValidation.AspNetCore;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using SynergyISP.Application.Common.Mappings;
+using SynergyISP.Domain.ValueObjects;
 
+namespace SynergyISP.Application;
 public static class DependencyInjection
 {
     /// <summary>

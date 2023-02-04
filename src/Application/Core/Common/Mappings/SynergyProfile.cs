@@ -1,9 +1,9 @@
-﻿namespace SynergyISP.Application.Common.Mappings;
-
+﻿
 using System.Reflection;
 using AutoMapper;
-using Domain.Abstractions;
+using SynergyISP.Domain.Abstractions;
 
+namespace SynergyISP.Application.Common.Mappings;
 internal class SynergyProfile : Profile
 {
     private const string MethodName = "Mapping";

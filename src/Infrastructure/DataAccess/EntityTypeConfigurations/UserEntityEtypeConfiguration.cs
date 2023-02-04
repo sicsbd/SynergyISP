@@ -1,12 +1,12 @@
-﻿namespace SynergyISP.Infrastructure.DataAccess.EntityTypeConfigurations;
-
-using Comparers;
-using Converters;
-using Domain.Entities;
-using Domain.ValueObjects;
+﻿
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SynergyISP.Domain.Entities;
+using SynergyISP.Domain.ValueObjects;
+using SynergyISP.Infrastructure.DataAccess.EntityTypeConfigurations.Comparers;
+using SynergyISP.Infrastructure.DataAccess.EntityTypeConfigurations.Converters;
 
+namespace SynergyISP.Infrastructure.DataAccess.EntityTypeConfigurations;
 /// <summary>
 /// The user entity type configuration.
 /// </summary>

@@ -1,12 +1,13 @@
-﻿namespace SynergyISP.Presentation.APIs.GraphQL.Types.UserManagement;
-using Application.Common.Dtos;
+﻿using SynergyISP.Application.Common.Dtos;
 
+namespace SynergyISP.Presentation.APIs.GraphQL.Types.UserManagement;
 public class CustomerDtoType : ObjectType<CustomerDto>
 {
     /// <inheritdoc/>
     protected override void Configure(IObjectTypeDescriptor<CustomerDto> descriptor)
     {
         base.Configure(descriptor);
+        descriptor.BindFieldsExplicitly();
         descriptor
             .Field(u => u.Id)
             .Ignore();
@@ -25,5 +26,13 @@ public class CustomerDtoType : ObjectType<CustomerDto>
         descriptor
             .Field(u => u.NickName)
             .Type<StringType>();
+        descriptor
+            .Field(u => u.FullName)
+            .Type<StringType>();
+        //descriptor
+        //    .Field(u => u.Profile)
+        //    .Type<ListType<CustomerProfileType>>()
+        //    .UsePaging()
+        //    .ResolveWith<CustomerProfileResolver>(r => r.GetProfile(null!));
     }
 }

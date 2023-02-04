@@ -1,8 +1,8 @@
-﻿namespace SynergyISP.Presentation.APIs.GraphQL.Types.UserManagement;
-
+﻿
+namespace SynergyISP.Presentation.APIs.GraphQL.Types.UserManagement;
 using Domain.Entities;
 using Marten;
-using SynergyISP.Presentation.APIs.GraphQL.Types.UserManagement.ScalarTypes;
+using ScalarTypes;
 
 /// <inheritdoc />
 public class TenantUserType : ObjectType<TenantUser>

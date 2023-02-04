@@ -1,12 +1,12 @@
-﻿namespace SynergyISP.Domain.Abstractions;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
+namespace SynergyISP.Domain.Abstractions;
 /// <summary>
 /// The data context for write operations.
 /// </summary>
-public interface IWriteDataContext
+public interface IWriteDataContext : IDisposable, IAsyncDisposable
 {
     ChangeTracker ChangeTracker { get; }
     DatabaseFacade Database { get; }

@@ -1,7 +1,7 @@
-﻿namespace SynergyISP.Domain.Abstractions;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using SynergyISP.Domain.Enumns;
 
+namespace SynergyISP.Domain.Abstractions;
 public interface ISpecification<TEntity, TKey>
     where TEntity : class, IEntity<TKey>
     where TKey : Id

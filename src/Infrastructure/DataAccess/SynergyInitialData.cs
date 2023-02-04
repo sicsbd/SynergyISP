@@ -1,34 +1,40 @@
-﻿namespace SynergyISP.Infrastructure;
-
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using Domain.Entities;
-using Domain.ValueObjects;
-using Marten;
+﻿using Marten;
 using Marten.Schema;
+using Microsoft.Extensions.Logging;
+using SynergyISP.Domain.Aggregates;
+using SynergyISP.Domain.Entities;
+using SynergyISP.Domain.ValueObjects;
 
+namespace SynergyISP.Infrastructure;
 /// <summary>
-/// Initial data for 
+/// Initial data for No SQL.
 /// </summary>
 public class SynergyInitialData : IInitialData
 {
-    private readonly IMapper _mapper;
+    private readonly ILogger<SynergyInitialData> _logger;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SynergyInitialData"/> class.
     /// </summary>
-    /// <param name="mapper">The mapper.</param>
-    public SynergyInitialData(
-        IMapper mapper)
+    /// <param name="logger">The logger.</param>
+    public SynergyInitialData(ILogger<SynergyInitialData> logger)
     {
-        _mapper = mapper;
+        _logger = logger;
     }
 
+    /// <summary>
+    /// Gets or sets the initial org users.
+    /// </summary>
     public static IEnumerable<OrganizationUser> InitialOrgUsers { get; set; }
 
+    /// <summary>
+    /// Gets or sets the initial tenant users.
+    /// </summary>
     public static IEnumerable<TenantUser> InitialTenantUsers { get; set; }
 
+    /// <summary>
+    /// Gets or sets the initial customers.
+    /// </summary>
     public static IEnumerable<Customer> InitialCustomers { get; set; }
 
     /// <summary>
@@ -38,7 +44,7 @@ public class SynergyInitialData : IInitialData
     /// <returns>A list of User.</returns>
     public static IEnumerable<OrganizationUser> PopulateOrganizationUsers()
     {
-        return PopulateUsers<OrganizationUser, OrganizationUserId>("rafsan", "Rafsanul", "Hasan");
+        return PopulateUsers<OrganizationUser, OrganizationUserId>("rafsan");
     }
 
     /// <summary>
@@ -48,7 +54,7 @@ public class SynergyInitialData : IInitialData
     /// <returns>A list of User.</returns>
     public static IEnumerable<TenantUser> PopulateTenantUsers()
     {
-        return PopulateUsers<TenantUser, TenantUserId>("tuser", "Tenant", "User");
+        return PopulateUsers<TenantUser, TenantUserId>("tuser");
     }
 
     /// <summary>
@@ -58,7 +64,7 @@ public class SynergyInitialData : IInitialData
     /// <returns>A list of User.</returns>
     public static IEnumerable<Customer> PopulateCustomers()
     {
-        return PopulateUsers<Customer, CustomerId>("customer", "Customer", "User");
+        return PopulateUsers<Customer, CustomerId>("customer");
     }
 
     /// <summary>
@@ -66,20 +72,41 @@ public class SynergyInitialData : IInitialData
     /// </summary>
     /// <param name="initialUsers">Initial users.</param>
     /// <returns>A list of User.</returns>
-    public static IEnumerable<CustomerProfile> PopulateUserProfiles()
+    public static IEnumerable<CustomerProfile> PopulateCustomerProfiles()
     {
+        PopulateCustomers();
         List<CustomerProfile> profiles = new();
         for (int i = 0; i < InitialCustomers.Count(); i++)
         {
-            OrganizationUser organizationUser = InitialOrgUsers.ElementAt(i);
-            profiles.Add(PopulateProfile(organizationUser.Id, i));
-            TenantUser tenantUser = InitialTenantUsers.ElementAt(i);
-            profiles.Add(PopulateProfile(tenantUser.Id, i));
+            ////OrganizationUser organizationUser = InitialOrgUsers.ElementAt(i);
+            ////profiles.AddRange(PopulateProfile(organizationUser.Id, i));
+            ////TenantUser tenantUser = InitialTenantUsers.ElementAt(i);
+            ////profiles.AddRange(PopulateProfile(tenantUser.Id, i));
             Customer customer = InitialCustomers.ElementAt(i);
-            profiles.Add(PopulateProfile(customer.Id, i));
+            profiles.AddRange(PopulateProfile<CustomerProfile, Customer, CustomerId>(customer.Id, i));
         }
 
         return profiles;
+    }
+
+    /// <summary>
+    /// Gets the users profiles.
+    /// </summary>
+    /// <param name="initialUsers">Initial users.</param>
+    /// <returns>A list of User.</returns>
+    public static IEnumerable<CustomerProfile> PopulateOrgUserProfiles()
+    {
+        //List<OrganizationUserProfile> profiles = new();
+        //for (int i = 0; i < InitialCustomers.Count(); i++)
+        //{
+        //    OrganizationUser organizationUser = InitialOrgUsers.ElementAt(i);
+        //    profiles.AddRange(PopulateProfile < (organizationUser.Id, i));
+        //    ////TenantUser tenantUser = InitialTenantUsers.ElementAt(i);
+        //    ////profiles.AddRange(PopulateProfile(tenantUser.Id, i));
+        //}
+
+        //return profiles;
+        return Enumerable.Empty<CustomerProfile>();
     }
 
     /// <inheritdoc/>
@@ -87,14 +114,19 @@ public class SynergyInitialData : IInitialData
     {
         try
         {
-            using IDocumentSession session = store.LightweightSession();
-            IEnumerable<CustomerProfile> userProfiles = PopulateUserProfiles();
-            session.Store(userProfiles);
+            using IDocumentSession session = store.DirtyTrackedSession();
+            session.EjectAllOfType(typeof(CustomerProfile));
+            await session.SaveChangesAsync(cancellation);
+            List<CustomerProfile> userProfiles = PopulateCustomerProfiles().ToList();
+            userProfiles.ForEach(p =>
+            {
+                session.Store(p);
+            });
             await session.SaveChangesAsync(cancellation);
         }
-        catch
+        catch (Exception ex)
         {
-
+            _logger.LogError(ex.Message);
         }
     }
 
@@ -102,18 +134,14 @@ public class SynergyInitialData : IInitialData
     /// Populates the users.
     /// </summary>
     /// <param name="userName">The user name.</param>
-    /// <param name="firstName">The first name.</param>
-    /// <param name="lastName">The last name.</param>
     /// <returns>A list of TUsers.</returns>
     private static IEnumerable<TUser> PopulateUsers<TUser, TKey>(
-        string userName,
-        string firstName,
-        string lastName)
+        string userName)
         where TUser : User<TKey>, new()
         where TKey : UserId, new()
     {
-        List<TUser> initialUsers = new(5);
-        for (int i = 0; i < 5; i++)
+        List<TUser> initialUsers = new(100);
+        for (int i = 0; i < 100; i++)
         {
             string num = i == 0 ? string.Empty : i.ToString();
             TUser user = new();
@@ -122,10 +150,10 @@ public class SynergyInitialData : IInitialData
                 .ChangeAccount(
                     new TKey(),
                     $"{userName}{num}",
-                    $"{firstName}{num}",
-                    $"{lastName}{num}",
-                    string.Empty,
-                    string.Empty,
+                    Faker.Name.First(),
+                    Faker.Name.Last(),
+                    Faker.Name.First(),
+                    Faker.Name.First(),
                     "Rh123@",
                     null)
                 .ToEntity();
@@ -135,14 +163,33 @@ public class SynergyInitialData : IInitialData
         return initialUsers;
     }
 
-    private static CustomerProfile PopulateProfile(Guid id, int counter)
+    /// <summary>
+    /// Populates the profile.
+    /// </summary>
+    /// <param name="id">The id.</param>
+    /// <param name="counter">The counter.</param>
+    /// <returns>A CustomerProfile.</returns>
+    private static List<TProfile> PopulateProfile<TProfile, TUser, TKey>(Guid id, int counter)
+        where TProfile : UserProfileAggregate<TUser, TKey>, new()
+        where TUser : User<TKey>
+        where TKey : UserId
     {
-        return new()
+        TProfile profile1 = new()
         {
-            Id = id,
-            ProfileKey = "DateOfBirth",
-            DataType = typeof(DateTime).Name,
-            Value = DateTimeOffset.UtcNow.AddDays(counter).ToString(),
+            UserId = id,
+            Field = "DateOfBirth",
+            DataType = typeof(DateTimeOffset).Name,
+            Value = DateTimeOffset.UtcNow.AddDays(counter),
         };
+
+        TProfile profile2 = new()
+        {
+            UserId = id,
+            Field = "DateOfBirth2",
+            DataType = typeof(DateTimeOffset).Name,
+            Value = DateTimeOffset.UtcNow.AddDays(counter + 1),
+        };
+
+        return new() { profile1, profile2 };
     }
 }

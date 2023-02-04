@@ -1,14 +1,14 @@
-﻿namespace SynergyISP.Presentation.APIs.GraphQL;
-
-using Application.Common.Dtos;
+﻿
 using AutoMapper;
-using Domain.Abstractions;
-using Domain.Entities;
-using Domain.ValueObjects;
 using HotChocolate.Subscriptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using SynergyISP.Application.Common.Dtos;
+using SynergyISP.Domain.Abstractions;
+using SynergyISP.Domain.Entities;
+using SynergyISP.Domain.ValueObjects;
 
+namespace SynergyISP.Presentation.APIs.GraphQL;
 public class Mutation
 {
     public async Task<Customer> CreateUser(

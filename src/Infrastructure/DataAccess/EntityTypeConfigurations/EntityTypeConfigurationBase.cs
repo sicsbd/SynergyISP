@@ -1,10 +1,10 @@
-﻿namespace SynergyISP.Infrastructure.DataAccess.EntityTypeConfigurations;
-using Domain.Abstractions;
-using Humanizer;
+﻿using Humanizer;
 using JasperFx.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SynergyISP.Domain.Abstractions;
 
+namespace SynergyISP.Infrastructure.DataAccess.EntityTypeConfigurations;
 public abstract class EntityTypeConfigurationBase<TEntity, TKey>
     : IEntityTypeConfiguration<TEntity>
     where TEntity : class, IEntity<TKey>

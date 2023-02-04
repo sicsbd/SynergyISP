@@ -1,14 +1,15 @@
-﻿namespace SynergyISP.Domain.ValueObjects;
-using Abstractions;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using SynergyISP.Domain.Abstractions;
 using SynergyISP.Domain.Helpers;
 
+namespace SynergyISP.Domain.ValueObjects;
 public readonly record struct Name : IValueObject, IEquatable<string>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="Name"/> class.
     /// Prevents a default instance of the <see cref="UserName"/> class from being created.
     /// </summary>
+    [JsonConstructor]
     public Name()
     {
         Value = string.Empty;
@@ -19,7 +20,6 @@ public readonly record struct Name : IValueObject, IEquatable<string>
     /// Prevents a default instance of the <see cref="UserName"/> class from being created.
     /// </summary>
     /// <param name="name">name.</param>
-    [JsonConstructor]
     public Name(string name)
     {
         Value = name;

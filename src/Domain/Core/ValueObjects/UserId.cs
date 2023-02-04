@@ -1,9 +1,9 @@
-﻿namespace SynergyISP.Domain.ValueObjects;
-
+﻿
 using System.Diagnostics.CodeAnalysis;
-using Abstractions;
 using Newtonsoft.Json;
+using SynergyISP.Domain.Abstractions;
 
+namespace SynergyISP.Domain.ValueObjects;
 /// <summary>
 /// Represents a UserId.
 /// </summary>
@@ -25,7 +25,6 @@ public record class UserId
     /// Prevents a default instance of the <see cref="UserId"/> class from being created.
     /// </summary>
     /// <param name="original">The original.</param>
-    [JsonConstructor]
     public UserId(Guid original)
     {
         Value = original;
@@ -51,8 +50,8 @@ public record class UserId
     public static bool operator ==(Guid id, UserId id2) => id2.Value.Equals(id);
     public static bool operator !=(Guid id, UserId id2) => !id2.Value.Equals(id);
 
-    public static bool operator ==(UserId id, Guid id2) => id.Value.Equals(id);
-    public static bool operator !=(UserId id, Guid id2) => !id.Value.Equals(id);
+    public static bool operator ==(UserId id, Guid id2) => id.Value.Equals(id2);
+    public static bool operator !=(UserId id, Guid id2) => !id.Value.Equals(id2);
 
     /// <inheritdoc/>
     public override string ToString()

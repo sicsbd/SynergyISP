@@ -1,8 +1,7 @@
-﻿namespace SynergyISP.Domain.Abstractions;
-using System;
+﻿using System.Text;
 using Newtonsoft.Json;
-using System.Text;
 
+namespace SynergyISP.Domain.Abstractions;
 /// <summary>
 /// Represents a domain entity.
 /// </summary>

@@ -1,10 +1,13 @@
 ﻿namespace SynergyISP.Infrastructure;
-
 using DataAccess;
 using DataAccess.Repositories;
 using Domain.Abstractions;
-using JasperFx.CodeGeneration;
+using EasyCaching.Core.Configurations;
+using EFCoreSecondLevelCacheInterceptor;
 using Marten;
+using MessagePack;
+using MessagePack.Formatters;
+using MessagePack.Resolvers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -51,21 +54,26 @@ internal static class DependencyInjection
         string noSqlConnectionStringName)
     {
         bool isDevelopment = hostEnvironment.IsDevelopment();
-        var martenSvcCollection = services.AddMarten(opt =>
+        MartenConfigurationExpression martenSvcCollection = services.AddMarten(configure: opt =>
         {
-            opt.DatabaseSchemaName = "Synergy";
+            opt.DatabaseSchemaName = "public";
             opt.Schema.Include<SynergyRegistry>();
             opt.UseDefaultSerialization(
                 enumStorage: EnumStorage.AsString,
                 casing: Casing.CamelCase);
             opt.Connection(configuration.GetConnectionString(noSqlConnectionStringName)!);
+            opt.Logger(new ConsoleMartenLogger());
+            opt.AutoCreateSchemaObjects = isDevelopment ? AutoCreate.All : AutoCreate.CreateOrUpdate;
         })
-        .OptimizeArtifactWorkflow(isDevelopment ? TypeLoadMode.Dynamic : TypeLoadMode.Static)
-        .UseLightweightSessions();
+        //.OptimizeArtifactWorkflow(isDevelopment ? TypeLoadMode.Dynamic : TypeLoadMode.Static)
+        .UseLightweightSessions()
+        ;
         if (isDevelopment)
         {
             martenSvcCollection.InitializeWith<SynergyInitialData>();
             martenSvcCollection.ApplyAllDatabaseChangesOnStartup();
+            martenSvcCollection.AssertDatabaseMatchesConfigurationOnStartup();
+            martenSvcCollection.BuildSessionsWith<SynergySessionFactory>(ServiceLifetime.Scoped);
         }
 
         return martenSvcCollection;
@@ -78,18 +86,20 @@ internal static class DependencyInjection
         string connectionStringName)
     {
         bool isDevelopment = hostEnvironment.IsDevelopment();
-        services.AddPooledDbContextFactory<DataContext>(dbCtxOpts =>
+        services.AddPooledDbContextFactory<DataContext>((sp, dbCtxOpts) =>
         {
             DatabaseSettings dbSettings = configuration.GetSection("DatabaseSettings").Get<DatabaseSettings>()!;
             var connectionString = configuration.GetConnectionString(connectionStringName);
-            dbCtxOpts.UseNpgsql(connectionString, pgDbCtxOpts =>
-            {
-                pgDbCtxOpts.CommandTimeout(dbSettings.CommandTimeout ?? 0);
+            dbCtxOpts.UseNpgsql(
+                connectionString,
+                pgDbCtxOpts =>
+                {
+                    pgDbCtxOpts.CommandTimeout(dbSettings.CommandTimeout ?? 0);
 
-                // pgDbCtxOpts.EnableRetryOnFailure(dbSettings.MaxRetryCount, dbSettings.MaxRetryDelay, null);
-                pgDbCtxOpts.UseRedshift(dbSettings.UseRedShift ?? false);
-                pgDbCtxOpts.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
-            });
+                    // pgDbCtxOpts.EnableRetryOnFailure(dbSettings.MaxRetryCount, dbSettings.MaxRetryDelay, null);
+                    pgDbCtxOpts.UseRedshift(dbSettings.UseRedShift ?? false);
+                    pgDbCtxOpts.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+                });
             dbCtxOpts.ConfigureWarnings(b => b.Default(WarningBehavior.Log));
             dbCtxOpts.EnableDetailedErrors(isDevelopment);
             dbCtxOpts.EnableSensitiveDataLogging(isDevelopment);
@@ -102,6 +112,45 @@ internal static class DependencyInjection
         //NpgsqlConnection.GlobalTypeMapper.MapComposite<Name>("nvarchar(50)");
         //NpgsqlConnection.GlobalTypeMapper.MapComposite<UserName>("nvarchar(100)");
         //NpgsqlConnection.GlobalTypeMapper.MapComposite<Password>("nvarchar(100)");
+
+        const string providerName1 = "Redis1";
+        const string serializerName = "Pack1";
+        services.AddEFSecondLevelCache(options =>
+            options
+                .UseEasyCachingCoreProvider(providerName1, isHybridCache: false)
+                .DisableLogging(!isDevelopment)
+                .UseCacheKeyPrefix("EF_"));
+        services.AddEasyCaching(option =>
+            option
+                .UseRedis(
+                    config =>
+                    {
+                        config.DBConfig.AllowAdmin = true;
+                        config.DBConfig.SyncTimeout = 10000;
+                        config.DBConfig.AsyncTimeout = 10000;
+                        config.DBConfig.Endpoints.Add(new ServerEndPoint("127.0.0.1", 6379));
+                        config.EnableLogging = true;
+                        config.SerializerName = serializerName;
+                        config.DBConfig.ConnectionTimeout = 10000;
+                    },
+                    providerName1)
+                .WithMessagePack(
+                    so =>
+                    {
+                        so.EnableCustomResolver = true;
+                        IMessagePackFormatter[] formatters = new IMessagePackFormatter[]
+                        {
+                            // DBNullFormatter.Instance, // This is necessary for the null values
+                        };
+                        IFormatterResolver[] formatterResolvers = new IFormatterResolver[]
+                        {
+                            NativeDateTimeResolver.Instance,
+                            ContractlessStandardResolver.Instance,
+                            StandardResolverAllowPrivate.Instance,
+                        };
+                        so.CustomResolvers = CompositeResolver.Create(formatters, formatterResolvers);
+                    },
+                    serializerName));
         return services;
     }
 
