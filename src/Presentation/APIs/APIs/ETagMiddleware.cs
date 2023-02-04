@@ -3,6 +3,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Primitives;
 using Microsoft.Net.Http.Headers;
 using SynergyISP.Domain.Helpers;
 using System.IO;
@@ -34,11 +35,54 @@ public class ETagMiddleware
             string checksum = CalculateChecksum(ms);
 
             response.Headers[HeaderNames.ETag] = checksum;
+            StringValues etag;
 
-            if (context.Request.Headers.TryGetValue(HeaderNames.IfNoneMatch, out var etag)
-             && checksum == etag)
+            ExtractETags(context.Request.Headers, out (string? matchETag, string? noneMatchETag, string? modifiedSinceETag, string? unmodifiedSinceETag) etags);
+
+            if (etags.matchETag is not null
+             && !etags.matchETag.IsNullOrWhiteSpace()
+             && checksum == etags.matchETag)
             {
-                response.StatusCode = StatusCodes.Status304NotModified;
+                response.StatusCode = checksum == etags.matchETag
+                                    ? StatusCodes.Status304NotModified
+                                    : StatusCodes.Status412PreconditionFailed;
+
+                response.ContentLength = 0;
+                await response.BodyWriter.WriteAsync(string.Empty.GetBytes(Encoding.UTF8));
+                return;
+            }
+
+            if (etags.noneMatchETag is not null
+             && !etags.noneMatchETag.IsNullOrWhiteSpace()
+             && checksum == etags.noneMatchETag)
+            {
+                response.StatusCode = checksum == etags.matchETag
+                                    ? StatusCodes.Status304NotModified
+                                    : StatusCodes.Status412PreconditionFailed;
+                response.ContentLength = 0;
+                await response.BodyWriter.WriteAsync(string.Empty.GetBytes(Encoding.UTF8));
+                return;
+            }
+
+            if (etags.modifiedSinceETag is not null
+             && !etags.modifiedSinceETag.IsNullOrWhiteSpace()
+             && checksum == etags.modifiedSinceETag)
+            {
+                response.StatusCode = checksum == etags.matchETag
+                                    ? StatusCodes.Status304NotModified
+                                    : StatusCodes.Status412PreconditionFailed;
+                response.ContentLength = 0;
+                await response.BodyWriter.WriteAsync(string.Empty.GetBytes(Encoding.UTF8));
+                return;
+            }
+
+            if (etags.unmodifiedSinceETag is not null
+             && !etags.unmodifiedSinceETag.IsNullOrWhiteSpace()
+             && checksum == etags.unmodifiedSinceETag)
+            {
+                response.StatusCode = checksum == etags.matchETag
+                                    ? StatusCodes.Status304NotModified
+                                    : StatusCodes.Status412PreconditionFailed;
                 response.ContentLength = 0;
                 await response.BodyWriter.WriteAsync(string.Empty.GetBytes(Encoding.UTF8));
                 return;
@@ -47,6 +91,19 @@ public class ETagMiddleware
 
         ms.Position = 0;
         await ms.CopyToAsync(originalStream);
+    }
+
+    private void ExtractETags(
+        IHeaderDictionary headers,
+        out (string?, string?, string?, string?) etags)
+    {
+        StringValues matchETag, noneMatchETag, modifiedSinceETag, unmodifiedSinceETag;
+        headers.TryGetValue(HeaderNames.IfMatch, out matchETag);
+        headers.TryGetValue(HeaderNames.IfNoneMatch, out noneMatchETag);
+        headers.TryGetValue(HeaderNames.IfUnmodifiedSince, out modifiedSinceETag);
+        headers.TryGetValue(HeaderNames.IfUnmodifiedSince, out unmodifiedSinceETag);
+        etags = (matchETag, noneMatchETag, modifiedSinceETag, unmodifiedSinceETag);
+
     }
 
     private static bool IsEtagSupported(HttpResponse response)
