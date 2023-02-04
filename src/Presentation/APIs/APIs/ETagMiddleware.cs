@@ -35,13 +35,11 @@ public class ETagMiddleware
             string checksum = CalculateChecksum(ms);
 
             response.Headers[HeaderNames.ETag] = checksum;
-            StringValues etag;
 
             ExtractETags(context.Request.Headers, out (string? matchETag, string? noneMatchETag, string? modifiedSinceETag, string? unmodifiedSinceETag) etags);
 
             if (etags.matchETag is not null
-             && !etags.matchETag.IsNullOrWhiteSpace()
-             && checksum == etags.matchETag)
+             && !etags.matchETag.IsNullOrWhiteSpace())
             {
                 response.StatusCode = checksum == etags.matchETag
                                     ? StatusCodes.Status304NotModified
@@ -53,10 +51,9 @@ public class ETagMiddleware
             }
 
             if (etags.noneMatchETag is not null
-             && !etags.noneMatchETag.IsNullOrWhiteSpace()
-             && checksum == etags.noneMatchETag)
+             && !etags.noneMatchETag.IsNullOrWhiteSpace())
             {
-                response.StatusCode = checksum == etags.matchETag
+                response.StatusCode = checksum == etags.noneMatchETag
                                     ? StatusCodes.Status304NotModified
                                     : StatusCodes.Status412PreconditionFailed;
                 response.ContentLength = 0;
@@ -65,10 +62,9 @@ public class ETagMiddleware
             }
 
             if (etags.modifiedSinceETag is not null
-             && !etags.modifiedSinceETag.IsNullOrWhiteSpace()
-             && checksum == etags.modifiedSinceETag)
+             && !etags.modifiedSinceETag.IsNullOrWhiteSpace())
             {
-                response.StatusCode = checksum == etags.matchETag
+                response.StatusCode = checksum == etags.modifiedSinceETag
                                     ? StatusCodes.Status304NotModified
                                     : StatusCodes.Status412PreconditionFailed;
                 response.ContentLength = 0;
@@ -77,10 +73,9 @@ public class ETagMiddleware
             }
 
             if (etags.unmodifiedSinceETag is not null
-             && !etags.unmodifiedSinceETag.IsNullOrWhiteSpace()
-             && checksum == etags.unmodifiedSinceETag)
+             && !etags.unmodifiedSinceETag.IsNullOrWhiteSpace())
             {
-                response.StatusCode = checksum == etags.matchETag
+                response.StatusCode = checksum == etags.unmodifiedSinceETag
                                     ? StatusCodes.Status304NotModified
                                     : StatusCodes.Status412PreconditionFailed;
                 response.ContentLength = 0;
